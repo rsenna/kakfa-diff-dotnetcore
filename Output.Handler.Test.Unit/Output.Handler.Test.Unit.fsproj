@@ -2,8 +2,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <AssemblyName>Kafka.BinDiff.Output.Handler.Test.Unit</AssemblyName>
-    <RootNamespace>Kafka.BinDiff.Output.Handler.Test.Unit</RootNamespace>
+    <AssemblyName>Kafka.Diff.Output.Handler.Test.Unit</AssemblyName>
+    <RootNamespace>Kafka.Diff.Output.Handler.Test.Unit</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Tests.fs" />

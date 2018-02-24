@@ -2,8 +2,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
-    <AssemblyName>Kafka.BinDiff.Input.Handler</AssemblyName>
-    <RootNamespace>Kafka.BinDiff.Input.Handler</RootNamespace>
+    <AssemblyName>Kafka.Diff.Input.Handler</AssemblyName>
+    <RootNamespace>Kafka.Diff.Input.Handler</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" Version="0.11.3" />

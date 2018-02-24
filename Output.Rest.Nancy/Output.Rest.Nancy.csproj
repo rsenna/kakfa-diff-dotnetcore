@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Kakfka.Diff.Output.Rest.Nancy</AssemblyName>
+    <RootNamespace>Kakfka.Diff.Output.Rest.Nancy</RootNamespace>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
+    <PackageReference Include="Nancy.Hosting.Self" Version="2.0.0-clinteastwood" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Output.Handler\Output.Handler.csproj" />
+  </ItemGroup>
+</Project>
