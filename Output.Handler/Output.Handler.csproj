@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Kafka.BinDiff.Output.Handler</AssemblyName>
+    <RootNamespace>Kafka.BinDiff.Output.Handler</RootNamespace>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="0.11.3" />
+  </ItemGroup>
+</Project>
