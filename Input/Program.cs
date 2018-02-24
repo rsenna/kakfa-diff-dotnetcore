@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
-using Kakfa.Diff.Input.Autofac;
 using Nancy.Hosting.Self;
 
-namespace Kakfa.Diff.Input
+namespace Kafka.Diff.Input
 {
     internal class Program
     {

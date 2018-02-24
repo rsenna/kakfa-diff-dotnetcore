@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Nancy;
 
-namespace Kakfa.Diff.Input.Nancy
+namespace Kafka.Diff.Input.Nancy
 {
     public sealed class InputModule : NancyModule
     {

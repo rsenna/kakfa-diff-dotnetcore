@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using Kakfa.Diff.Input.Handler;
+using Kafka.Diff.Input.Handler;
 using CommonLogModule=Kafka.Diff.Common.Log.Autofac.SingleInstanceModule;
 
-namespace Kakfa.Diff.Input.Autofac
+namespace Kafka.Diff.Input.Autofac
 {
     public class SingleInstanceModule : Module
     {

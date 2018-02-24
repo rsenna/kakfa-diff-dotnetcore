@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Kakfa.Diff.Input
+namespace Kafka.Diff.Input
 {
     public interface IProducerHandler
     {
