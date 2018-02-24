@@ -23,7 +23,7 @@ namespace Kafka.Diff.Publisher
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterAssemblyModules();
+            builder.RegisterAssemblyModules(typeof(Program).Assembly);
 
             using (var container = builder.Build())
             {

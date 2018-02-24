@@ -7,7 +7,7 @@ namespace Kakfka.Diff.Subscriber.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<KafkaSubscriberHandler>().As<ISubscriberHandler>().InstancePerRequest();
+            builder.RegisterType<KafkaSubscriberHandler>().As<ISubscriberHandler>();
         }
     }
 }

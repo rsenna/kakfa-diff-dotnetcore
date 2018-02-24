@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Kafka.Diff.Common.Log.Impl;
 
 namespace Kafka.Diff.Common.Log.Autofac
 {
@@ -6,7 +7,8 @@ namespace Kafka.Diff.Common.Log.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterGeneric(typeof(ILogger<>)).As(typeof(ILogger<>)).SingleInstance();
+            builder.RegisterGeneric(typeof(ConsoleLogger<>)).As(typeof(ILogger<>));
         }
     }
 }
+
