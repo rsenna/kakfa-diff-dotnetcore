@@ -7,9 +7,9 @@ using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common.Log;
 
-namespace Kakfka.Diff.Output.Handler
+namespace Kakfka.Diff.Subscriber.Handler
 {
-    public class KafkaConsumerHandler : IConsumerHandler
+    public class KafkaSubscriberHandler : ISubscriberHandler
     {
         public static readonly IDictionary<string, object> Config = new ConcurrentDictionary<string, object>
         {
@@ -20,10 +20,10 @@ namespace Kakfka.Diff.Output.Handler
 
         public static readonly StringDeserializer DefaultDeserializer = new StringDeserializer(Encoding.UTF8);
 
-        private readonly ILogger<KafkaConsumerHandler> _logger;
+        private readonly ILogger<KafkaSubscriberHandler> _logger;
         private readonly Consumer<Ignore, string> _consumer;
 
-        public KafkaConsumerHandler(ILogger<KafkaConsumerHandler> logger)
+        public KafkaSubscriberHandler(ILogger<KafkaSubscriberHandler> logger)
         {
             _logger = logger;
             _consumer = new Consumer<Ignore, string>(Config, null, DefaultDeserializer);

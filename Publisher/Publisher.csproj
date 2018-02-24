@@ -2,8 +2,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Kakfka.Diff.Output</AssemblyName>
-    <RootNamespace>Kakfka.Diff.Output</RootNamespace>
+    <AssemblyName>Kafka.Diff.Publisher</AssemblyName>
+    <RootNamespace>Kafka.Diff.Publisher</RootNamespace>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>

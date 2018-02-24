@@ -2,8 +2,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Kafka.Diff.Input</AssemblyName>
-    <RootNamespace>Kafka.Diff.Input</RootNamespace>
+    <AssemblyName>Kakfka.Diff.Subscriber</AssemblyName>
+    <RootNamespace>Kakfka.Diff.Subscriber</RootNamespace>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>

@@ -1,10 +1,10 @@
 ﻿using Autofac;
-using Kakfka.Diff.Output.Autofac;
+using Kakfka.Diff.Subscriber.Autofac;
 using Nancy;
 using Nancy.Bootstrappers.Autofac;
 using SingleInstanceModule = Kafka.Diff.Common.Log.Autofac.SingleInstanceModule;
 
-namespace Kakfka.Diff.Output.Nancy
+namespace Kakfka.Diff.Subscriber.Nancy
 {
     public class Bootstrapper : AutofacNancyBootstrapper
     {

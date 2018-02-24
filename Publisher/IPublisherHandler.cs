@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Kafka.Diff.Input
+namespace Kafka.Diff.Publisher
 {
-    public interface IProducerHandler
+    public interface IPublisherHandler
     {
         Task Test(ICollection<string> items);
     }

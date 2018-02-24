@@ -4,7 +4,7 @@ using Autofac;
 using Kafka.Diff.Common.Log;
 using Nancy.Hosting.Self;
 
-namespace Kakfka.Diff.Output
+namespace Kakfka.Diff.Subscriber
 {
     internal class Program
     {
@@ -28,7 +28,7 @@ namespace Kakfka.Diff.Output
 
             using (var container = builder.Build())
             {
-                var handler = container.Resolve<IConsumerHandler>();
+                var handler = container.Resolve<ISubscriberHandler>();
                 var logger = container.Resolve<ILogger<Program>>();
 
                 var result = handler.Test(10).GetAwaiter().GetResult();

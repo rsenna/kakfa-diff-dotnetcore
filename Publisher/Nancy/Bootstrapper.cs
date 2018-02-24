@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using Kafka.Diff.Input.Autofac;
+using Kafka.Diff.Publisher.Autofac;
 using Nancy.Bootstrappers.Autofac;
 
-namespace Kafka.Diff.Input.Nancy
+namespace Kafka.Diff.Publisher.Nancy
 {
     public class Bootstrapper : AutofacNancyBootstrapper
     {

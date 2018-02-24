@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 
-namespace Kafka.Diff.Input.Handler
+namespace Kafka.Diff.Publisher.Handler
 {
-    public class KafkaProducerHandler : IProducerHandler
+    public class KafkaPublisherHandler : IPublisherHandler
     {
         public static readonly IDictionary<string, object> Config = new ConcurrentDictionary<string, object>
         {

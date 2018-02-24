@@ -3,19 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Input.Test.Unit", "Input.Test.Unit\Input.Test.Unit.fsproj", "{9721B184-DEBB-4BCA-861A-98E02400D32B}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Output.Test.Unit", "Output.Test.Unit\Output.Test.Unit.fsproj", "{03344301-7C93-4303-8AC1-FBE9A83C659C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Log", "Common.Log\Common.Log.csproj", "{B22C9038-061A-495F-A378-0B94AB23C244}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Input", "Input\Input.csproj", "{784145C6-FEEB-420D-ADAE-AADCEFBE5915}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Publisher", "Publisher\Publisher.csproj", "{784145C6-FEEB-420D-ADAE-AADCEFBE5915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Output", "Output\Output.csproj", "{0D39E2FA-B78B-4E74-A36E-4905A3FF8FE6}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Publisher.Test.Unit", "Publisher.Test.Unit\Publisher.Test.Unit.fsproj", "{9721B184-DEBB-4BCA-861A-98E02400D32B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{E89BD49B-70B4-4CE9-9A8D-48BADCA7F993}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subscriber", "Subscriber\Subscriber.csproj", "{0D39E2FA-B78B-4E74-A36E-4905A3FF8FE6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Output", "Output", "{B89286A1-A88E-4BC2-974B-2B4366CB87F2}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Subscriber.Test.Unit", "Subscriber.Test.Unit\Subscriber.Test.Unit.fsproj", "{03344301-7C93-4303-8AC1-FBE9A83C659C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,9 +88,5 @@ Global
 		{0D39E2FA-B78B-4E74-A36E-4905A3FF8FE6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9721B184-DEBB-4BCA-861A-98E02400D32B} = {E89BD49B-70B4-4CE9-9A8D-48BADCA7F993}
-		{784145C6-FEEB-420D-ADAE-AADCEFBE5915} = {E89BD49B-70B4-4CE9-9A8D-48BADCA7F993}
-		{03344301-7C93-4303-8AC1-FBE9A83C659C} = {B89286A1-A88E-4BC2-974B-2B4366CB87F2}
-		{0D39E2FA-B78B-4E74-A36E-4905A3FF8FE6} = {B89286A1-A88E-4BC2-974B-2B4366CB87F2}
 	EndGlobalSection
 EndGlobal

@@ -3,7 +3,7 @@ using System.Linq;
 using Autofac;
 using Nancy.Hosting.Self;
 
-namespace Kafka.Diff.Input
+namespace Kafka.Diff.Publisher
 {
     internal class Program
     {
@@ -27,7 +27,7 @@ namespace Kafka.Diff.Input
 
             using (var container = builder.Build())
             {
-                var handler = container.Resolve<IProducerHandler>();
+                var handler = container.Resolve<IPublisherHandler>();
                 handler.Test(new [] {"this", "is", "a", "test", "b", "c", "d", "e", "f", "g" }).GetAwaiter().GetResult();
             }
         }
