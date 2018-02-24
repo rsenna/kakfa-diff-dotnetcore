@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 
-namespace Kafka.Diff.Input.Handler.Impl
+namespace Kakfa.Diff.Input.Handler
 {
     public class KafkaProducerHandler : IProducerHandler
     {

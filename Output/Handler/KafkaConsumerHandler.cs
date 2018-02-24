@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +7,7 @@ using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common.Log;
 
-namespace Kafka.Diff.Output.Handler.Impl
+namespace Kakfka.Diff.Output.Handler
 {
     public class KafkaConsumerHandler : IConsumerHandler
     {

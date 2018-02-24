@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kafka.Diff.Output.Handler;
 using Nancy;
 
-namespace Kakfka.Diff.Output.Rest.Nancy
+namespace Kakfka.Diff.Output.Nancy
 {
     public sealed class OutputModule : NancyModule
     {

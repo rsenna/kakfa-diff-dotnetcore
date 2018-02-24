@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Kafka.Diff.Output.Handler
+namespace Kakfka.Diff.Output
 {
     public interface IConsumerHandler : IDisposable
     {

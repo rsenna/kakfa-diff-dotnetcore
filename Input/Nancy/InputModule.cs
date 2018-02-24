@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Kafka.Diff.Input.Handler;
 using Nancy;
 
-namespace Kakfa.Diff.Input.Rest.Nancy
+namespace Kakfa.Diff.Input.Nancy
 {
     public sealed class InputModule : NancyModule
     {

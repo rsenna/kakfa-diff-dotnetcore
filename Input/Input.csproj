@@ -2,14 +2,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Kakfa.Diff.Input.Rest.Nancy</AssemblyName>
-    <RootNamespace>Kakfa.Diff.Input.Rest.Nancy</RootNamespace>
+    <AssemblyName>Kakfa.Diff.Input</AssemblyName>
+    <RootNamespace>Kakfa.Diff.Input</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="0.11.3" />
     <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
     <PackageReference Include="Nancy.Hosting.Self" Version="2.0.0-clinteastwood" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Input.Handler\Input.Handler.csproj" />
+    <ProjectReference Include="..\Common.Log\Common.Log.csproj" />
   </ItemGroup>
 </Project>
