@@ -18,7 +18,7 @@ namespace Kakfka.Diff.Subscriber.Handler
             ["enable.auto.commit"] = false
         };
 
-        public static readonly StringDeserializer DefaultDeserializer = new StringDeserializer(Encoding.UTF8);
+        public static readonly StringDeserializer UTF8Deserializer = new StringDeserializer(Encoding.UTF8);
 
         private readonly ILogger<KafkaSubscriberHandler> _logger;
         private readonly Consumer<Ignore, string> _consumer;
@@ -26,7 +26,7 @@ namespace Kakfka.Diff.Subscriber.Handler
         public KafkaSubscriberHandler(ILogger<KafkaSubscriberHandler> logger)
         {
             _logger = logger;
-            _consumer = new Consumer<Ignore, string>(Config, null, DefaultDeserializer);
+            _consumer = new Consumer<Ignore, string>(Config, null, UTF8Deserializer);
 
             _consumer.OnPartitionEOF += (_, end)
                 => _logger.Info($"Reached end of topic {end.Topic} partition {end.Partition}, next message will be at offset {end.Offset}");
