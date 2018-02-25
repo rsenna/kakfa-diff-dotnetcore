@@ -7,7 +7,10 @@ namespace Kakfka.Diff.Subscriber.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<KafkaSubscriberHandler>().As<ISubscriberHandler>();
+            builder.RegisterGeneric(typeof(KafkaConsumerFactory<,>)).As(typeof(IKafkaConsumerFactory<,>));
+
+//            builder.RegisterType<KafkaAssignHandler>().As<ISubscriberHandler>();
+            builder.RegisterType<KafkaSubscribeHandler>().As<ISubscriberHandler>();
         }
     }
 }
