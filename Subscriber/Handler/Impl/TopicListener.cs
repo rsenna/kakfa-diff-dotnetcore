@@ -7,7 +7,7 @@ using Kafka.Diff.Common.Log;
 
 namespace Kakfka.Diff.Subscriber.Handler.Impl
 {
-    public class TopicListener
+    public class TopicListener : ITopicListener
     {
         // TODO: inject bootstrap.servers
         public static readonly IDictionary<string, object> ConfigAssign = new ConcurrentDictionary<string, object>
@@ -51,10 +51,9 @@ namespace Kakfka.Diff.Subscriber.Handler.Impl
         /// <summary>
         /// Read messages. When there is a left/right match, generate diff and save it in repository.
         /// </summary>
-        public void Process()
+        public void Process(int tries)
         {
-            // TODO: add event so I we can break from the loop
-            while (true)
+            for (var i = 0; i < tries; i++)
             {
                 if (!_consumer.Consume(out var message, ConsumeTimeoutMS))
                 {
