@@ -13,12 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subscriber", "Subscriber\Su
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Subscriber.Test.Unit", "Subscriber.Test.Unit\Subscriber.Test.Unit.fsproj", "{03344301-7C93-4303-8AC1-FBE9A83C659C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{0E417CBD-5A06-49B6-B63A-4191B84F359D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other Files", "Other Files", "{6AFDE7AF-8812-4501-AFC6-F1C661997698}"
 ProjectSection(SolutionItems) = preProject
-	CleanUp.ps1 = CleanUp.ps1
 	docker-compose.yml = docker-compose.yml
-	TestKafka.Docker.ps1 = TestKafka.Docker.ps1
-	TestKafka.Local.ps1 = TestKafka.Local.ps1
+	Scripts\CleanUp.ps1 = Scripts\CleanUp.ps1
+	Scripts\TestKafka.Docker.ps1 = Scripts\TestKafka.Docker.ps1
+	Scripts\TestKafka.Local.ps1 = Scripts\TestKafka.Local.ps1
 EndProjectSection
 EndProject
 Global
