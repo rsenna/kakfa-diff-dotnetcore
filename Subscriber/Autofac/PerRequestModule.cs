@@ -1,8 +1,6 @@
 ﻿using Autofac;
 using Kakfka.Diff.Subscriber.Handler;
 using Kakfka.Diff.Subscriber.Handler.Impl;
-using Kakfka.Diff.Subscriber.Handler.Impl.Test;
-using Kakfka.Diff.Subscriber.Handler.Test;
 
 namespace Kakfka.Diff.Subscriber.Autofac
 {

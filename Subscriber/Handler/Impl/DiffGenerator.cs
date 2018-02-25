@@ -1,10 +1,5 @@
 ﻿namespace Kakfka.Diff.Subscriber.Handler.Impl
 {
-    public interface IDiffGenerator
-    {
-        string GetDiff(CacheRecord cacheRecord);
-    }
-
     public class DiffGenerator : IDiffGenerator
     {
         public string GetDiff(CacheRecord cacheRecord)

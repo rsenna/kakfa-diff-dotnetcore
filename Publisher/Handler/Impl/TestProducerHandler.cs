@@ -7,7 +7,7 @@ using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common.Log;
 
-namespace Kafka.Diff.Publisher.Handler.Test.Impl
+namespace Kafka.Diff.Publisher.Handler.Impl
 {
     public class TestProducerHandler : ITestProducerHandler
     {

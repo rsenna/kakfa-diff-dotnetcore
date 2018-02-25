@@ -2,7 +2,6 @@
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common.Log;
-using Kakfka.Diff.Subscriber.Handler.Impl.Test;
 
 namespace Kakfka.Diff.Subscriber.Handler.Impl
 {

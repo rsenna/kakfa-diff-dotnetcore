@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
-using Kafka.Diff.Publisher.Handler.Test;
+using Kafka.Diff.Publisher.Handler;
 using Nancy.Hosting.Self;
 
 namespace Kafka.Diff.Publisher

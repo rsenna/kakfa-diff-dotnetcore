@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Kakfka.Diff.Subscriber.Handler.Test
+namespace Kakfka.Diff.Subscriber.Handler
 {
     public interface ITestConsumerHandler : IDisposable
     {

@@ -4,12 +4,6 @@ using LiteDB;
 
 namespace Kakfka.Diff.Subscriber.Handler.Impl
 {
-    public interface IDiffRepository
-    {
-        void Save(CacheRecord record);
-        CacheRecord Load(string id);
-    }
-
     public class DiffRepository : IDiffRepository
     {
         private readonly LiteCollection<CacheRecord> _col;

@@ -2,7 +2,7 @@
 using System.Linq;
 using Autofac;
 using Kafka.Diff.Common.Log;
-using Kakfka.Diff.Subscriber.Handler.Test;
+using Kakfka.Diff.Subscriber.Handler;
 using Nancy.Hosting.Self;
 
 namespace Kakfka.Diff.Subscriber

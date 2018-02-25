@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>Kafka.Diff.Common.Log</AssemblyName>
-    <RootNamespace>Kafka.Diff.Common.Log</RootNamespace>
+    <AssemblyName>Kafka.Diff.Common</AssemblyName>
+    <RootNamespace>Kafka.Diff.Common</RootNamespace>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>

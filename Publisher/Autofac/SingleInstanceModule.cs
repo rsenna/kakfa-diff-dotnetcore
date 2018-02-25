@@ -2,8 +2,7 @@
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common.Log;
 using Kafka.Diff.Publisher.Handler;
-using Kafka.Diff.Publisher.Handler.Test;
-using Kafka.Diff.Publisher.Handler.Test.Impl;
+using Kafka.Diff.Publisher.Handler.Impl;
 using Kafka.Diff.Publisher.Serializer;
 using CommonLogModule=Kafka.Diff.Common.Log.Autofac.SingleInstanceModule;
 

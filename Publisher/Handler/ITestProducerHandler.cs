@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Kafka.Diff.Publisher.Handler.Test
+namespace Kafka.Diff.Publisher.Handler
 {
     public interface ITestProducerHandler
     {

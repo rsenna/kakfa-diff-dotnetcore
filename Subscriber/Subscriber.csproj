@@ -22,6 +22,6 @@
     <PackageReference Include="Nancy.Hosting.Self" Version="2.0.0-clinteastwood" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Log\Common.Log.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common.Log;
 using Kakfka.Diff.Subscriber.Deserializer;
+using Kakfka.Diff.Subscriber.Handler;
 using Kakfka.Diff.Subscriber.Handler.Impl;
 using CommonLogModule=Kafka.Diff.Common.Log.Autofac.SingleInstanceModule;
 
