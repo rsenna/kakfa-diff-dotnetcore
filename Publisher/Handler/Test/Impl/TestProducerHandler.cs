@@ -7,9 +7,9 @@ using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common.Log;
 
-namespace Kafka.Diff.Publisher.Handler
+namespace Kafka.Diff.Publisher.Handler.Test.Impl
 {
-    public class KafkaPublisherHandler : IPublisherHandler
+    public class TestProducerHandler : ITestProducerHandler
     {
         public static readonly IDictionary<string, object> Config = new ConcurrentDictionary<string, object>
         {
@@ -28,9 +28,9 @@ namespace Kafka.Diff.Publisher.Handler
 
         public static readonly StringSerializer UTF8Serializer = new StringSerializer(Encoding.UTF8);
 
-        private readonly ILogger<KafkaPublisherHandler> _logger;
+        private readonly ILogger<TestProducerHandler> _logger;
 
-        public KafkaPublisherHandler(ILogger<KafkaPublisherHandler> logger)
+        public TestProducerHandler(ILogger<TestProducerHandler> logger)
         {
             _logger = logger;
         }

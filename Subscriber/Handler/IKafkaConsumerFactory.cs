@@ -2,7 +2,7 @@
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 
-namespace Kakfka.Diff.Subscriber
+namespace Kakfka.Diff.Subscriber.Handler
 {
     public interface IKafkaConsumerFactory<TKey, TValue>
     {

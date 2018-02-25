@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
+using Kafka.Diff.Publisher.Handler.Test;
 using Nancy.Hosting.Self;
 
 namespace Kafka.Diff.Publisher
@@ -27,7 +28,7 @@ namespace Kafka.Diff.Publisher
 
             using (var container = builder.Build())
             {
-                var handler = container.Resolve<IPublisherHandler>();
+                var handler = container.Resolve<ITestProducerHandler>();
                 handler.Test(new [] {"this", "is", "a", "test", "b", "c", "d", "e", "f", "g" }).GetAwaiter().GetResult();
             }
         }

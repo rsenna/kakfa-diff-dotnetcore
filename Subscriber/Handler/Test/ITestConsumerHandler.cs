@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Kakfka.Diff.Subscriber
+namespace Kakfka.Diff.Subscriber.Handler.Test
 {
-    public interface ISubscriberHandler : IDisposable
+    public interface ITestConsumerHandler : IDisposable
     {
         Task<IEnumerable<string>> Test(int take);
     }

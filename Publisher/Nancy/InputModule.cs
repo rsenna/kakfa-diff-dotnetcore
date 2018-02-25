@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Kafka.Diff.Publisher.Handler.Test;
 using Nancy;
 
 namespace Kafka.Diff.Publisher.Nancy
 {
     public sealed class InputModule : NancyModule
     {
-        private readonly IPublisherHandler _publisherHandler;
+        private readonly ITestProducerHandler _testProducerHandler;
 
         public InputModule(
-            IPublisherHandler publisherHandler)
+            ITestProducerHandler testProducerHandler)
             : base("v1/diff")
         {
-            _publisherHandler = publisherHandler;
+            _testProducerHandler = testProducerHandler;
 
             Post("{id:guid}/left", args => ProcessIt(args.id));
             Post("{id:guid}/right", args => ProcessIt(args.id));
@@ -20,7 +21,7 @@ namespace Kafka.Diff.Publisher.Nancy
 
         internal async Task<string> ProcessIt(Guid id)
         {
-            await _publisherHandler.Test(new[] { id.ToString() });
+            await _testProducerHandler.Test(new[] { id.ToString() });
             return "ok";
         }
     }

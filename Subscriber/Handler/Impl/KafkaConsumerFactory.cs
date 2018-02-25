@@ -1,19 +1,16 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common.Log;
+using Kakfka.Diff.Subscriber.Handler.Impl.Test;
 
-namespace Kakfka.Diff.Subscriber.Handler
+namespace Kakfka.Diff.Subscriber.Handler.Impl
 {
     public class KafkaConsumerFactory<TKey, TValue> : IKafkaConsumerFactory<TKey, TValue>
     {
-        private readonly ILogger<KafkaAssignHandler> _logger;
+        private readonly ILogger<TestConsumerAssignHandler> _logger;
 
-        public KafkaConsumerFactory(ILogger<KafkaAssignHandler> logger)
+        public KafkaConsumerFactory(ILogger<TestConsumerAssignHandler> logger)
         {
             _logger = logger;
         }

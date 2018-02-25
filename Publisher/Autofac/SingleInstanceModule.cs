@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Kafka.Diff.Publisher.Handler;
+using Kafka.Diff.Publisher.Handler.Test;
+using Kafka.Diff.Publisher.Handler.Test.Impl;
 using CommonLogModule=Kafka.Diff.Common.Log.Autofac.SingleInstanceModule;
 
 namespace Kafka.Diff.Publisher.Autofac
@@ -8,7 +10,7 @@ namespace Kafka.Diff.Publisher.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<KafkaPublisherHandler>().As<IPublisherHandler>().SingleInstance();
+            builder.RegisterType<TestProducerHandler>().As<ITestProducerHandler>().SingleInstance();
             builder.RegisterModule<CommonLogModule>();
         }
     }

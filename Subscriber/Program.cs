@@ -2,6 +2,7 @@
 using System.Linq;
 using Autofac;
 using Kafka.Diff.Common.Log;
+using Kakfka.Diff.Subscriber.Handler.Test;
 using Nancy.Hosting.Self;
 
 namespace Kakfka.Diff.Subscriber
@@ -28,7 +29,7 @@ namespace Kakfka.Diff.Subscriber
 
             using (var container = builder.Build())
             {
-                var handler = container.Resolve<ISubscriberHandler>();
+                var handler = container.Resolve<ITestConsumerHandler>();
                 var logger = container.Resolve<ILogger<Program>>();
 
                 var result = handler.Test(10).GetAwaiter().GetResult();

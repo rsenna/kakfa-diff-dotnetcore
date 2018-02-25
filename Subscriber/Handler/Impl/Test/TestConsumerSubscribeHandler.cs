@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common.Log;
+using Kakfka.Diff.Subscriber.Handler.Test;
 
-namespace Kakfka.Diff.Subscriber.Handler
+namespace Kakfka.Diff.Subscriber.Handler.Impl.Test
 {
-    public class KafkaSubscribeHandler : ISubscriberHandler
+    public class TestConsumerSubscribeHandler : ITestConsumerHandler
     {
         public static readonly IDictionary<string, object> Config = new ConcurrentDictionary<string, object>
         {
@@ -27,10 +28,10 @@ namespace Kakfka.Diff.Subscriber.Handler
 
         public static readonly StringDeserializer UTF8Deserializer = new StringDeserializer(Encoding.UTF8);
 
-        private readonly ILogger<KafkaAssignHandler> _logger;
+        private readonly ILogger<TestConsumerAssignHandler> _logger;
         private readonly Consumer<Ignore, string> _consumer;
 
-        public KafkaSubscribeHandler(ILogger<KafkaAssignHandler> logger, IKafkaConsumerFactory<Ignore, string> consumerFactory)
+        public TestConsumerSubscribeHandler(ILogger<TestConsumerAssignHandler> logger, IKafkaConsumerFactory<Ignore, string> consumerFactory)
         {
             _logger = logger;
             _consumer = consumerFactory.Create(Config, null, UTF8Deserializer);

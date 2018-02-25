@@ -1,5 +1,8 @@
 ﻿using Autofac;
 using Kakfka.Diff.Subscriber.Handler;
+using Kakfka.Diff.Subscriber.Handler.Impl;
+using Kakfka.Diff.Subscriber.Handler.Impl.Test;
+using Kakfka.Diff.Subscriber.Handler.Test;
 
 namespace Kakfka.Diff.Subscriber.Autofac
 {
@@ -9,8 +12,9 @@ namespace Kakfka.Diff.Subscriber.Autofac
         {
             builder.RegisterGeneric(typeof(KafkaConsumerFactory<,>)).As(typeof(IKafkaConsumerFactory<,>));
 
-//            builder.RegisterType<KafkaAssignHandler>().As<ISubscriberHandler>();
-            builder.RegisterType<KafkaSubscribeHandler>().As<ISubscriberHandler>();
+            // TODO Only TestConsumerSubscribeHandler will be registered; use an index to choose instead.
+            builder.RegisterType<TestConsumerAssignHandler>().As<ITestConsumerHandler>();
+            builder.RegisterType<TestConsumerSubscribeHandler>().As<ITestConsumerHandler>();
         }
     }
 }
