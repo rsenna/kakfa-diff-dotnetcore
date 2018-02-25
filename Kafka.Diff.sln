@@ -17,7 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{0E41
 ProjectSection(SolutionItems) = preProject
 	CleanUp.ps1 = CleanUp.ps1
 	docker-compose.yml = docker-compose.yml
-	TestDockerKafka.ps1 = TestDockerKafka.ps1
+	TestKafka.Docker.ps1 = TestKafka.Docker.ps1
+	TestKafka.Local.ps1 = TestKafka.Local.ps1
 EndProjectSection
 EndProject
 Global

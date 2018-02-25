@@ -34,7 +34,7 @@ namespace Kakfka.Diff.Subscriber
                 var result = handler.Test(10).GetAwaiter().GetResult();
                 foreach (var item in result)
                 {
-                    logger.Info($"Got item: ${item}");
+                    logger.Info($"Got item: {item}");
                 }
             }
         }

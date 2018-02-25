@@ -13,7 +13,7 @@ namespace Kakfka.Diff.Subscriber.Handler
     {
         public static readonly IDictionary<string, object> Config = new ConcurrentDictionary<string, object>
         {
-            ["group.id"] = "sample-consumer",
+            ["group.id"] = "kafka-diff",
             ["bootstrap.servers"] = "localhost:9092",
             ["enable.auto.commit"] = false
         };
@@ -52,7 +52,8 @@ namespace Kakfka.Diff.Subscriber.Handler
             _consumer.OnStatistics += (_, json)
                 => _logger.Info($"Statistics: {json}");
 
-            _consumer.Subscribe("hello-topic");
+            _consumer.Assign(new List<TopicPartitionOffset> { new TopicPartitionOffset("hello-topic", 0, 0) });
+            // _consumer.Subscribe("hello-topic");
         }
 
         public async Task<IEnumerable<string>> Test(int take)
@@ -74,8 +75,9 @@ namespace Kakfka.Diff.Subscriber.Handler
         {
             for (var i = 0; i < take; i++)
             {
-                if (!_consumer.Consume(out var message, millisecondsTimeout: 100))
+                if (!_consumer.Consume(out var message, millisecondsTimeout: 2000))
                 {
+                    _logger.Info($"Did not consume any message.");
                     continue;
                 }
 
