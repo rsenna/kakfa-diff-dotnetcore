@@ -35,8 +35,13 @@ namespace Kafka.Diff.Publisher
 
         private static void Service()
         {
-            // initialize an instance of NancyHost (found in the Nancy.Hosting.Self package)
-            var host = new NancyHost(new Uri("http://localhost:12345"));
+            // Initialize an instance of NancyHost:
+            var configuration = new HostConfiguration {UrlReservations = new UrlReservations {CreateAutomatically = true}};
+            var uri = new Uri("http://localhost:12345");
+
+            Console.WriteLine($"Uri: {uri}.");
+
+            var host = new NancyHost(configuration, uri);
             host.Start(); // start hosting
 
             Console.ReadKey();

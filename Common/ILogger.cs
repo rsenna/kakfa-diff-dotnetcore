@@ -1,4 +1,4 @@
-﻿namespace Kafka.Diff.Common.Log
+﻿namespace Kafka.Diff.Common
 {
     public interface ILogger<in T>
     {

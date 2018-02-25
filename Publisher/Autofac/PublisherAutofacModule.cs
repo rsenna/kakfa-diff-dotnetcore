@@ -1,14 +1,14 @@
 ﻿using Autofac;
 using Confluent.Kafka.Serialization;
-using Kafka.Diff.Common.Log;
+using Kafka.Diff.Common;
+using Kafka.Diff.Common.Autofac;
 using Kafka.Diff.Publisher.Handler;
 using Kafka.Diff.Publisher.Handler.Impl;
 using Kafka.Diff.Publisher.Serializer;
-using CommonLogModule=Kafka.Diff.Common.Log.Autofac.SingleInstanceModule;
 
 namespace Kafka.Diff.Publisher.Autofac
 {
-    public class SingleInstanceModule : Module
+    public class PublisherAutofacModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -18,9 +18,10 @@ namespace Kafka.Diff.Publisher.Autofac
 
             // Handlers:
             builder.RegisterType<TestProducerHandler>().As<ITestProducerHandler>().SingleInstance();
+            builder.RegisterType<SubmitHandler>().As<ISubmitHandler>().SingleInstance();
 
             // Dependencies:
-            builder.RegisterModule<CommonLogModule>();
+            builder.RegisterModule<CommonAutofacModule>();
         }
     }
 }

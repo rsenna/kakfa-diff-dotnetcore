@@ -20,7 +20,7 @@ namespace Kakfka.Diff.Subscriber.Nancy
             _topicListener = topicListener;
             _diffRepository = diffRepository;
 
-            Get("{id:guid", args => GetDiff(args.id));
+            Get("{id}", args => GetDiff(args.id));
 
             // Start worker thread.
             // This is a naive, never-ending implementation of a infinite loop, using tasks
@@ -35,7 +35,7 @@ namespace Kakfka.Diff.Subscriber.Nancy
             });
         }
 
-        public string GetDiff(Guid id)
+        public string GetDiff(object id)
         {
             var record = _diffRepository.Load(id.ToString());
 

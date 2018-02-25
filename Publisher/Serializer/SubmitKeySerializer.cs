@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Confluent.Kafka.Serialization;
-using Kafka.Diff.Common.Log;
+using Kafka.Diff.Common;
 using Kafka.Diff.Publisher.Handler;
 
 namespace Kafka.Diff.Publisher.Serializer

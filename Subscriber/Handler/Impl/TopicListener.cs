@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
-using Kafka.Diff.Common.Log;
+using Kafka.Diff.Common;
 
 namespace Kakfka.Diff.Subscriber.Handler.Impl
 {
@@ -23,29 +23,26 @@ namespace Kakfka.Diff.Subscriber.Handler.Impl
         public const string Topic = "diff-topic";
         public const int ConsumeTimeoutMS = 5000;
 
-        private readonly ILogger<TestConsumerAssignHandler> _logger;
+        private readonly IKafkaConsumerFactory<SubmitKey, string> _consumerFactory;
         private readonly IDiffGenerator _diffGenerator;
         private readonly IDiffRepository _diffRepository;
-        private readonly Consumer<SubmitKey, string> _consumer;
+        private readonly IDeserializer<SubmitKey> _keyDeserializer;
+        private readonly IDeserializer<string> _valueDeserializer;
 
         public TopicListener(
-            ILogger<TestConsumerAssignHandler> logger,
             IKafkaConsumerFactory<SubmitKey, string> consumerFactory,
             IDiffGenerator diffGenerator,
             IDiffRepository diffRepository,
             IDeserializer<SubmitKey> keyDeserializer,
             IDeserializer<string> valueDeserializer)
         {
-            _logger = logger;
+            _consumerFactory = consumerFactory;
             _diffGenerator = diffGenerator;
             _diffRepository = diffRepository;
+            _keyDeserializer = keyDeserializer;
+            _valueDeserializer = valueDeserializer;
 
             _cache = new ConcurrentDictionary<string, CacheRecord>();
-
-            _consumer = consumerFactory.Create(ConfigAssign, keyDeserializer, valueDeserializer);
-            _consumer.Assign(new List<TopicPartitionOffset> { new TopicPartitionOffset(Topic, 0, 0) });
-
-            // TODO: do I also need to subscribe?
         }
 
         /// <summary>
@@ -53,45 +50,46 @@ namespace Kakfka.Diff.Subscriber.Handler.Impl
         /// </summary>
         public void Process(int tries)
         {
-            for (var i = 0; i < tries; i++)
+            using (var consumer = _consumerFactory.Create(ConfigAssign, _keyDeserializer, _valueDeserializer))
             {
-                if (!_consumer.Consume(out var message, ConsumeTimeoutMS))
+                consumer.Assign(new List<TopicPartitionOffset> {new TopicPartitionOffset(Topic, 0, 0)});
+
+                // TODO: do I also need to subscribe?
+                for (var i = 0; i < tries; i++)
                 {
-                    continue;
+                    if (!consumer.Consume(out var message, ConsumeTimeoutMS))
+                    {
+                        continue;
+                    }
+
+                    // Check if we have read a previous message with same Key.Id
+                    if (!_cache.TryGetValue(message.Key.Id, out var cacheRecord))
+                    {
+                        cacheRecord = new CacheRecord(message.Key.Id);
+                    }
+
+                    // Set new retrieved side:
+                    switch (message.Key.Side)
+                    {
+                        case SubmitKey.Left:
+                            cacheRecord = cacheRecord.With(newLeft: message.Value);
+                            break;
+
+                        case SubmitKey.Right:
+                            cacheRecord = cacheRecord.With(newRight: message.Value);
+                            break;
+
+                        default:
+                            throw new InvalidOperationException($"Unknown side {message.Key.Side}.");
+                    }
+
+                    // Generate new diff:
+                    cacheRecord = cacheRecord.With(newDiff: _diffGenerator.GetDiff(cacheRecord));
+
+                    // Save it:
+                    _diffRepository.Save(cacheRecord);
                 }
-
-                // Check if we have read a previous message with same Key.Id
-                if (!_cache.TryGetValue(message.Key.Id, out var cacheRecord))
-                {
-                    cacheRecord = new CacheRecord(message.Key.Id);
-                }
-
-                // Set new retrieved side:
-                switch (message.Key.Side)
-                {
-                    case SubmitKey.Left:
-                        cacheRecord = cacheRecord.With(newLeft: message.Value);
-                        break;
-
-                    case SubmitKey.Right:
-                        cacheRecord = cacheRecord.With(newRight: message.Value);
-                        break;
-
-                    default:
-                        throw new InvalidOperationException($"Unknown side {message.Key.Side}.");
-                }
-
-                // Generate new diff:
-                cacheRecord = cacheRecord.With(newDiff: _diffGenerator.GetDiff(cacheRecord));
-
-                // Save it:
-                _diffRepository.Save(cacheRecord);
             }
-        }
-
-        public void Dispose()
-        {
-            _consumer?.Dispose();
         }
     }
 }

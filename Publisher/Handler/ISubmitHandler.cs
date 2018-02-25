@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Kafka.Diff.Common.Log;
+using Kafka.Diff.Common;
 
 namespace Kafka.Diff.Publisher.Handler
 {

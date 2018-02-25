@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Confluent.Kafka.Serialization;
-using Kafka.Diff.Common.Log;
+using Kafka.Diff.Common;
 
 namespace Kakfka.Diff.Subscriber.Deserializer
 {

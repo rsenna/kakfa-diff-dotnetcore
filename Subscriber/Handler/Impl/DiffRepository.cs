@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Kafka.Diff.Common.Log;
 using LiteDB;
 
 namespace Kakfka.Diff.Subscriber.Handler.Impl

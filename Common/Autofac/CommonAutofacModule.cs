@@ -1,9 +1,9 @@
 ﻿using Autofac;
-using Kafka.Diff.Common.Log.Impl;
+using Kafka.Diff.Common.Impl;
 
-namespace Kafka.Diff.Common.Log.Autofac
+namespace Kafka.Diff.Common.Autofac
 {
-    public class SingleInstanceModule : Module
+    public class CommonAutofacModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

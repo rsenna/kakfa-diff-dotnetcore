@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Kafka.Diff.Common.Log.Impl
+namespace Kafka.Diff.Common.Impl
 {
     internal class ConsoleLogger<T> : ILogger<T>
     {

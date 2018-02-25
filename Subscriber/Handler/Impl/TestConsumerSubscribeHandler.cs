@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
-using Kafka.Diff.Common.Log;
+using Kafka.Diff.Common;
 
 namespace Kakfka.Diff.Subscriber.Handler.Impl
 {

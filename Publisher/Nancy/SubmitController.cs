@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Kafka.Diff.Common.Log;
+using Kafka.Diff.Common;
 using Kafka.Diff.Publisher.Handler;
 using Nancy;
 

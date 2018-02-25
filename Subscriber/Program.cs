@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
-using Kafka.Diff.Common.Log;
+using Kafka.Diff.Common;
 using Kakfka.Diff.Subscriber.Handler;
 using Nancy.Hosting.Self;
 
@@ -42,8 +42,13 @@ namespace Kakfka.Diff.Subscriber
 
         private static void Service()
         {
-            // initialize an instance of NancyHost (found in the Nancy.Hosting.Self package)
-            var host = new NancyHost(new Uri("http://localhost:23456"));
+            // Initialize an instance of NancyHost:
+            var configuration = new HostConfiguration {UrlReservations = new UrlReservations {CreateAutomatically = true}};
+            var uri = new Uri("http://localhost:12340");
+
+            Console.WriteLine($"Uri: {uri}.");
+
+            var host = new NancyHost(configuration, uri);
             host.Start(); // start hosting
 
             Console.ReadKey();

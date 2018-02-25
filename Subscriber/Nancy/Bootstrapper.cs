@@ -2,7 +2,7 @@
 using Kakfka.Diff.Subscriber.Autofac;
 using Nancy;
 using Nancy.Bootstrappers.Autofac;
-using SingleInstanceModule = Kafka.Diff.Common.Log.Autofac.SingleInstanceModule;
+using Nancy.Configuration;
 
 namespace Kakfka.Diff.Subscriber.Nancy
 {
@@ -10,12 +10,13 @@ namespace Kakfka.Diff.Subscriber.Nancy
     {
         protected override void ConfigureApplicationContainer(ILifetimeScope container)
         {
-            container.Update(builder => builder.RegisterModule<SingleInstanceModule>());
+            container.Update(builder => builder.RegisterModule<SubscriberAutofacModule>());
         }
 
-        protected override void ConfigureRequestContainer(ILifetimeScope container, NancyContext context)
+        public override void Configure(INancyEnvironment environment)
         {
-            container.Update(builder => builder.RegisterModule<PerRequestModule>());
+            environment.Tracing(enabled: true, displayErrorTraces: true);
+            base.Configure(environment);
         }
     }
 }
