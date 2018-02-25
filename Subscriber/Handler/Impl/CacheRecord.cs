@@ -19,5 +19,7 @@
             => new CacheRecord(Id, newLeft ?? Left, newRight ?? Right, newDiff ?? Diff);
 
         public bool IsFull => Left != null && Right != null;
+
+        public override string ToString() => $"Id: {Id} Left: {Left} Right: {Right} Diff: {Diff}.";
     }
 }
