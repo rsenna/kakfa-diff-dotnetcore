@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Confluent.Kafka.Serialization;
 
-namespace Kakfka.Diff.Subscriber.Deserializer
+namespace Kafka.Diff.Subscriber.Deserializer
 {
     public class UTF8Deserializer : StringDeserializer
     {

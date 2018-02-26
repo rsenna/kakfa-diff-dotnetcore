@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kakfka.Diff.Subscriber.Handler;
-using Kakfka.Diff.Subscriber.Handler.Impl;
+using Kafka.Diff.Subscriber.Handler;
 using Nancy;
 
-namespace Kakfka.Diff.Subscriber.Nancy
+namespace Kafka.Diff.Subscriber.Nancy
 {
     public sealed class DiffController : NancyModule
     {
@@ -22,30 +20,42 @@ namespace Kakfka.Diff.Subscriber.Nancy
 
             Get("{id}", args => GetDiff(args.id));
 
-            // Start worker thread.
-            // This is a naive, never-ending implementation of a infinite loop, using tasks
+            StartWorker();
+        }
+
+        /// <summary>
+        /// Start worker thread.
+        /// </summary>
+        /// <remarks>
+        /// This is a naive, never-ending implementation of a infinite loop, using tasks.
+        /// </remarks>
+        private void StartWorker()
+        {
             Task.Run(async () =>
             {
+                // TODO: add CancelationToken support so we can break from the loop
                 while (true)
                 {
-                    // TODO: add CancelationToken support so we can break from the loop
                     _topicListener.Process(10);
                     await Task.Delay(1000);
                 }
             });
         }
 
-        public string GetDiff(object id)
+        public Response GetDiff(Guid id)
         {
-            var record = _diffRepository.Load(id.ToString());
-
-            if (record == null)
+            try
             {
-                throw new ArgumentException($"Unknown id {id}.");
-            }
+                var record = _diffRepository.Load(id);
 
-            // TODO return json
-            return record.ToString();
+                return record == null
+                    ? Response.AsJson(new {Message = $"Unknown id {id}."}, HttpStatusCode.NotFound)
+                    : Response.AsJson(record);
+            }
+            catch (Exception ex)
+            {
+                return Response.AsJson(new {ex.Message, ex.Source, ex.StackTrace}, HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

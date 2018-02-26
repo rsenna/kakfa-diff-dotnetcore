@@ -2,10 +2,10 @@
 using System.Linq;
 using Autofac;
 using Kafka.Diff.Common;
-using Kakfka.Diff.Subscriber.Handler;
+using Kafka.Diff.Subscriber.Handler;
 using Nancy.Hosting.Self;
 
-namespace Kakfka.Diff.Subscriber
+namespace Kafka.Diff.Subscriber
 {
     internal class Program
     {

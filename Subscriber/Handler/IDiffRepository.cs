@@ -1,10 +1,11 @@
-﻿using Kakfka.Diff.Subscriber.Handler.Impl;
+﻿using System;
+using Kafka.Diff.Subscriber.Handler.Impl;
 
-namespace Kakfka.Diff.Subscriber.Handler
+namespace Kafka.Diff.Subscriber.Handler
 {
     public interface IDiffRepository
     {
         void Save(CacheRecord record);
-        CacheRecord Load(string id);
+        CacheRecord Load(Guid id);
     }
 }

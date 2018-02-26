@@ -76,6 +76,7 @@ namespace Kafka.Diff.Publisher.Handler.Impl
                 _logger.Info($"  Broker: {g.Broker.BrokerId} {g.Broker.Host}:{g.Broker.Port}");
                 _logger.Info($"  Protocol: {g.ProtocolType} {g.Protocol}");
                 _logger.Info($"  Members:");
+
                 foreach (var m in g.Members)
                 {
                     _logger.Info($"    {m.MemberId} {m.ClientId} {m.ClientHost}");

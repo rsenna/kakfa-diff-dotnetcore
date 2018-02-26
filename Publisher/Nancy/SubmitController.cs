@@ -10,30 +10,29 @@ namespace Kafka.Diff.Publisher.Nancy
     {
         private readonly ISubmitHandler _submitHandler;
 
-        public SubmitController(
-            ISubmitHandler submitHandler)
+        public SubmitController(ISubmitHandler submitHandler)
             : base("v1/diff")
         {
             _submitHandler = submitHandler;
 
-            Post("{id:guid}/left", args => PostIt(args.id, SubmitKey.Left));
-            Post("{id:guid}/right", args => PostIt(args.id, SubmitKey.Right));
+            Post("{id:guid}/left", async (args, ct) => await PostIt(args.id, SubmitKey.Left));
+            Post("{id:guid}/right", async (args, ct) => await PostIt(args.id, SubmitKey.Right));
         }
 
-        public async Task<string> PostIt(Guid id, string side)
+        public async Task<Response> PostIt(Guid id, string side)
         {
-            if (id == null)
+            try
             {
-                throw new ArgumentException("id cannot be null.", nameof(id));
+                var submitKey = new SubmitKey(id, side);
+                var value = Request.Body.AsString();
+                await _submitHandler.PostAsync(submitKey, value);
+
+                return Response.AsJson(new {Message = "OK"});
             }
-
-            // TODO make id be a guid in the whole application
-            var submitKey = new SubmitKey(id.ToString(), side);
-            var value = Request.Body.AsString();
-            await _submitHandler.Post(submitKey, value);
-
-            // TODO implement proper result
-            return "ok";
+            catch (Exception ex)
+            {
+                return Response.AsJson(new {ex.Message, ex.Source, ex.StackTrace}, HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

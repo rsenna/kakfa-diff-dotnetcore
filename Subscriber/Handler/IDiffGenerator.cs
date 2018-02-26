@@ -1,6 +1,6 @@
-﻿using Kakfka.Diff.Subscriber.Handler.Impl;
+﻿using Kafka.Diff.Subscriber.Handler.Impl;
 
-namespace Kakfka.Diff.Subscriber.Handler
+namespace Kafka.Diff.Subscriber.Handler
 {
     public interface IDiffGenerator
     {

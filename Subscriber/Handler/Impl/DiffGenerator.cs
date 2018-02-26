@@ -1,4 +1,4 @@
-﻿namespace Kakfka.Diff.Subscriber.Handler.Impl
+﻿namespace Kafka.Diff.Subscriber.Handler.Impl
 {
     public class DiffGenerator : IDiffGenerator
     {

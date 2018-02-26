@@ -1,10 +1,10 @@
 ﻿using Autofac;
-using Kakfka.Diff.Subscriber.Autofac;
+using Kafka.Diff.Subscriber.Autofac;
 using Nancy;
 using Nancy.Bootstrappers.Autofac;
 using Nancy.Configuration;
 
-namespace Kakfka.Diff.Subscriber.Nancy
+namespace Kafka.Diff.Subscriber.Nancy
 {
     public class Bootstrapper : AutofacNancyBootstrapper
     {

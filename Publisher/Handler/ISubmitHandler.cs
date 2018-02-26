@@ -5,6 +5,6 @@ namespace Kafka.Diff.Publisher.Handler
 {
     public interface ISubmitHandler
     {
-        Task Post(SubmitKey key, string value);
+        Task PostAsync(SubmitKey key, string value);
     }
 }

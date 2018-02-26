@@ -2,11 +2,11 @@
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common;
 using Kafka.Diff.Common.Autofac;
-using Kakfka.Diff.Subscriber.Deserializer;
-using Kakfka.Diff.Subscriber.Handler;
-using Kakfka.Diff.Subscriber.Handler.Impl;
+using Kafka.Diff.Subscriber.Deserializer;
+using Kafka.Diff.Subscriber.Handler;
+using Kafka.Diff.Subscriber.Handler.Impl;
 
-namespace Kakfka.Diff.Subscriber.Autofac
+namespace Kafka.Diff.Subscriber.Autofac
 {
     public class SubscriberAutofacModule : Module
     {

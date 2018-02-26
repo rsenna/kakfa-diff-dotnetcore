@@ -5,7 +5,7 @@ using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common;
 
-namespace Kakfka.Diff.Subscriber.Handler.Impl
+namespace Kafka.Diff.Subscriber.Handler.Impl
 {
     public class TopicListener : ITopicListener
     {
@@ -17,7 +17,7 @@ namespace Kakfka.Diff.Subscriber.Handler.Impl
             ["enable.auto.commit"] = false
         };
 
-        private readonly IDictionary<string, CacheRecord> _cache;
+        private readonly IDictionary<Guid, CacheRecord> _cache;
 
         // TODO: inject consts through Autofac
         public const string Topic = "diff-topic";
@@ -42,7 +42,7 @@ namespace Kakfka.Diff.Subscriber.Handler.Impl
             _keyDeserializer = keyDeserializer;
             _valueDeserializer = valueDeserializer;
 
-            _cache = new ConcurrentDictionary<string, CacheRecord>();
+            _cache = new ConcurrentDictionary<Guid, CacheRecord>();
         }
 
         /// <summary>
@@ -50,6 +50,8 @@ namespace Kakfka.Diff.Subscriber.Handler.Impl
         /// </summary>
         public void Process(int tries)
         {
+            // TODO: consumer is processing log from the beginning EVERY TIME
+            // TODO: check if Assign is enough to also process new messages
             using (var consumer = _consumerFactory.Create(ConfigAssign, _keyDeserializer, _valueDeserializer))
             {
                 consumer.Assign(new List<TopicPartitionOffset> {new TopicPartitionOffset(Topic, 0, 0)});
@@ -65,18 +67,18 @@ namespace Kakfka.Diff.Subscriber.Handler.Impl
                     // Check if we have read a previous message with same Key.Id
                     if (!_cache.TryGetValue(message.Key.Id, out var cacheRecord))
                     {
-                        cacheRecord = new CacheRecord(message.Key.Id);
+                        cacheRecord = new CacheRecord {Id = message.Key.Id};
                     }
 
                     // Set new retrieved side:
                     switch (message.Key.Side)
                     {
                         case SubmitKey.Left:
-                            cacheRecord = cacheRecord.With(newLeft: message.Value);
+                            cacheRecord.Left = message.Value;
                             break;
 
                         case SubmitKey.Right:
-                            cacheRecord = cacheRecord.With(newRight: message.Value);
+                            cacheRecord.Right = message.Value;
                             break;
 
                         default:
@@ -84,7 +86,7 @@ namespace Kakfka.Diff.Subscriber.Handler.Impl
                     }
 
                     // Generate new diff:
-                    cacheRecord = cacheRecord.With(newDiff: _diffGenerator.GetDiff(cacheRecord));
+                    cacheRecord.Diff = _diffGenerator.GetDiff(cacheRecord);
 
                     // Save it:
                     _diffRepository.Save(cacheRecord);

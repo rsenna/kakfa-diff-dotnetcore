@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common;
 
-namespace Kakfka.Diff.Subscriber.Deserializer
+namespace Kafka.Diff.Subscriber.Deserializer
 {
     public class SubmitKeyDeserializer : IDeserializer<SubmitKey>
     {

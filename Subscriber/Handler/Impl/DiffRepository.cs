@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using LiteDB;
 
-namespace Kakfka.Diff.Subscriber.Handler.Impl
+namespace Kafka.Diff.Subscriber.Handler.Impl
 {
     public class DiffRepository : IDiffRepository
     {
@@ -22,11 +23,10 @@ namespace Kakfka.Diff.Subscriber.Handler.Impl
 
         public void Save(CacheRecord record)
         {
-            // TODO: not sure if id works as string here
             _col.Upsert(record);
         }
 
-        public CacheRecord Load(string id)
+        public CacheRecord Load(Guid id)
         {
             var record = _col.Find(r => r.Id == id);
 

@@ -12,19 +12,19 @@ namespace Kafka.Diff.Common
 
         public const string Separator = ":";
 
-        public string Id { get; }
+        public Guid Id { get; }
         public string Side { get; }
 
         [Pure]
         public override string ToString() => $"{Id}{Separator}{Side}";
 
-        public SubmitKey([NotNull]string id, [NotNull]string side)
+        public SubmitKey(Guid id, [NotNull] string side)
         {
             Id = id;
             Side = side;
         }
 
-        public static SubmitKey FromString([NotNull]string text)
+        public static SubmitKey FromString([NotNull] string text)
         {
             var parts = text.Split(Separator);
 
@@ -33,7 +33,10 @@ namespace Kafka.Diff.Common
                 throw new ArgumentException($"Invalid ${text}", nameof(text));
             }
 
-            return new SubmitKey(parts[0], parts[1]);
+            var id = Guid.Parse(parts[0]);
+            var side = parts[1];
+
+            return new SubmitKey(id, side);
         }
 
         public bool Equals(SubmitKey other)

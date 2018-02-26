@@ -28,18 +28,18 @@ namespace Kafka.Diff.Publisher.Handler.Impl
         public const string Topic = "diff-topic";
         public const int FlushTimeoutMS = 100;
 
-        private readonly ILogger<TestProducerHandler> _logger;
+        private readonly ILogger<SubmitHandler> _logger;
         private readonly ISerializer<SubmitKey> _keySerializer;
         private readonly ISerializer<string> _valueSerializer;
 
-        public SubmitHandler(ILogger<TestProducerHandler> logger, ISerializer<SubmitKey> keySerializer, ISerializer<string> valueSerializer)
+        public SubmitHandler(ILogger<SubmitHandler> logger, ISerializer<SubmitKey> keySerializer, ISerializer<string> valueSerializer)
         {
             _logger = logger;
             _keySerializer = keySerializer;
             _valueSerializer = valueSerializer;
         }
 
-        public async Task Post(SubmitKey key, string value)
+        public async Task PostAsync(SubmitKey key, string value)
         {
             using (var producer = new Producer<SubmitKey, string>(Config, _keySerializer, _valueSerializer))
             {
@@ -48,7 +48,7 @@ namespace Kafka.Diff.Publisher.Handler.Impl
                     => _logger.Info($"Error: {e}");
 
                 producer.OnLog += (_, m)
-                    =>_logger.Info($"Name: {m.Name} Level: {m.Level} Facility: {m.Facility} Message: {m.Message}.");
+                    => _logger.Info($"Name: {m.Name} Level: {m.Level} Facility: {m.Facility} Message: {m.Message}.");
 
                 producer.OnStatistics += (_, s)
                     => _logger.Info($"Statistics: {s}");
@@ -58,9 +58,8 @@ namespace Kafka.Diff.Publisher.Handler.Impl
 
                 _logger.Info("Flushing...");
                 producer.Flush(FlushTimeoutMS);
+                _logger.Info("Flushed.");
             }
-
-            _logger.Info("Completed.");
         }
     }
 }

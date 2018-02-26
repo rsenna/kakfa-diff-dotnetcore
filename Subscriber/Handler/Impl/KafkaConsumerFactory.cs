@@ -3,7 +3,7 @@ using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common;
 
-namespace Kakfka.Diff.Subscriber.Handler.Impl
+namespace Kafka.Diff.Subscriber.Handler.Impl
 {
     public class KafkaConsumerFactory<TKey, TValue> : IKafkaConsumerFactory<TKey, TValue>
     {

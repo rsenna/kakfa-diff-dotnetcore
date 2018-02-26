@@ -1,4 +1,4 @@
-﻿namespace Kakfka.Diff.Subscriber.Handler
+﻿namespace Kafka.Diff.Subscriber.Handler
 {
     public interface ITopicListener
     {
