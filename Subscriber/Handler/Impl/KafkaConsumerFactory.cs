@@ -7,9 +7,9 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
 {
     public class KafkaConsumerFactory<TKey, TValue> : IKafkaConsumerFactory<TKey, TValue>
     {
-        private readonly ILogger<TestConsumerAssignHandler> _logger;
+        private readonly ILogger<KafkaConsumerFactory<TKey, TValue>> _logger;
 
-        public KafkaConsumerFactory(ILogger<TestConsumerAssignHandler> logger)
+        public KafkaConsumerFactory(ILogger<KafkaConsumerFactory<TKey, TValue>> logger)
         {
             _logger = logger;
         }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Kafka.Diff.Common;
 using Kafka.Diff.Publisher.Handler;
 using Nancy;
+using Nancy.ModelBinding;
 
 namespace Kafka.Diff.Publisher.Nancy
 {
@@ -24,8 +25,9 @@ namespace Kafka.Diff.Publisher.Nancy
             try
             {
                 var submitKey = new SubmitKey(id, side);
-                var value = Request.Body.AsString();
-                await _submitHandler.PostAsync(submitKey, value);
+                var debug = this.Request.Body.AsString();
+                var request = this.Bind<Request>();
+                await _submitHandler.PostAsync(submitKey, request.Data);
 
                 return Response.AsJson(new {Message = "OK"});
             }

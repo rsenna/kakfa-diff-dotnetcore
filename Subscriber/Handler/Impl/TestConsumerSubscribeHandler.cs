@@ -27,10 +27,10 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
 
         public static readonly StringDeserializer UTF8Deserializer = new StringDeserializer(Encoding.UTF8);
 
-        private readonly ILogger<TestConsumerAssignHandler> _logger;
+        private readonly ILogger<TestConsumerSubscribeHandler> _logger;
         private readonly Consumer<Ignore, string> _consumer;
 
-        public TestConsumerSubscribeHandler(ILogger<TestConsumerAssignHandler> logger, IKafkaConsumerFactory<Ignore, string> consumerFactory)
+        public TestConsumerSubscribeHandler(ILogger<TestConsumerSubscribeHandler> logger, IKafkaConsumerFactory<Ignore, string> consumerFactory)
         {
             _logger = logger;
             _consumer = consumerFactory.Create(Config, null, UTF8Deserializer);
