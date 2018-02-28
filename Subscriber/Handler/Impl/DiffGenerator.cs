@@ -1,24 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Confluent.Kafka;
 
 namespace Kafka.Diff.Subscriber.Handler.Impl
 {
     public class DiffGenerator : IDiffGenerator
     {
-        public void RefreshDiff(CacheRecord cacheRecord)
+        public void RefreshDiff(DiffRecord diffRecord)
         {
-            if (cacheRecord == null || !cacheRecord.IsFull)
+            if (diffRecord == null)
             {
                 return;
             }
 
-            var left = Convert.FromBase64String(cacheRecord.Left);
-            var right = Convert.FromBase64String(cacheRecord.Right);
+            diffRecord.Analysis = null;
 
-            var equalSize = cacheRecord.Analysis.EqualSize = left.Length == right.Length;
-            cacheRecord.Analysis.EqualContent = !equalSize;
+            if (!diffRecord.IsComplete)
+            {
+                return;
+            }
+
+            var left = Convert.FromBase64String(diffRecord.Left);
+            var right = Convert.FromBase64String(diffRecord.Right);
+
+            var analysis = new DiffRecord.DiffAnalysis();
+
+            var equalSize = analysis.EqualSize = left.Length == right.Length;
+            analysis.EqualContent = !equalSize;
 
             if (!equalSize)
             {
@@ -29,8 +37,8 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
             // at each byte, and return informations about equal and distinct windows, at THE SAME POSITION.
             // For a proper difference algorithm in C#, refer to http://www.mathertel.de/Diff/
 
-            CacheRecord.Offset currOffset = null;
-            var offsets = new List<CacheRecord.Offset>();
+            DiffRecord.DiffOffset currOffset = null;
+            var offsets = new List<DiffRecord.DiffOffset>();
 
             using (var leftStream = new MemoryStream(left))
             using (var leftReader = new StreamReader(leftStream))
@@ -62,14 +70,21 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
 
                     if (currOffset == null)
                     {
-                        currOffset = new CacheRecord.Offset {IsEqual = inSync};
+                        currOffset = new DiffRecord.DiffOffset {IsEqual = inSync};
                     }
 
                     currOffset.Length++;
                 }
             }
 
-            cacheRecord.Analysis.EqualContent = offsets.Count == 1 && offsets[0].IsEqual;
+            analysis.EqualContent = offsets.Count == 1 && offsets[0].IsEqual;
+
+            if (!analysis.EqualContent)
+            {
+                analysis.Offsets = offsets;
+            }
+
+            diffRecord.Analysis = analysis;
         }
     }
 }

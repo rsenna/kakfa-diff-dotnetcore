@@ -60,7 +60,7 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
                     }
 
                     // Check if we have read a previous message with same Key.Id
-                    var cacheRecord = _diffRepository.Load(message.Key.Id) ?? new CacheRecord {Id = message.Key.Id};
+                    var cacheRecord = _diffRepository.Load(message.Key.Id) ?? new DiffRecord {Id = message.Key.Id};
 
                     // Set new retrieved side:
                     switch (message.Key.Side)

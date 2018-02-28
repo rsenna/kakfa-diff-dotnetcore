@@ -5,7 +5,7 @@ namespace Kafka.Diff.Subscriber.Handler
 {
     public interface IDiffRepository
     {
-        void Save(CacheRecord record);
-        CacheRecord Load(Guid id);
+        void Save(DiffRecord record);
+        DiffRecord Load(Guid id);
     }
 }

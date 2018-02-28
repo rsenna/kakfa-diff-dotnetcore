@@ -6,27 +6,27 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
 {
     public class DiffRepository : IDiffRepository
     {
-        private readonly LiteCollection<CacheRecord> _col;
+        private readonly LiteCollection<DiffRecord> _col;
 
         // TODO: inject
         public const string DBPath = "./kafka-diff.db";
 
         public DiffRepository()
         {
-            BsonMapper.Global.Entity<CacheRecord>()
+            BsonMapper.Global.Entity<DiffRecord>()
                 .Id(r => r.Id);
 
             var db = new LiteDatabase(DBPath);
 
-            _col = db.GetCollection<CacheRecord>("records");
+            _col = db.GetCollection<DiffRecord>("records");
         }
 
-        public void Save(CacheRecord record)
+        public void Save(DiffRecord record)
         {
             _col.Upsert(record);
         }
 
-        public CacheRecord Load(Guid id)
+        public DiffRecord Load(Guid id)
         {
             var record = _col.Find(r => r.Id == id);
 
