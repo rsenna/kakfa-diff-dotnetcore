@@ -4,6 +4,6 @@ namespace Kafka.Diff.Subscriber.Handler
 {
     public interface IDiffGenerator
     {
-        string GetDiff(CacheRecord cacheRecord);
+        void RefreshDiff(CacheRecord cacheRecord);
     }
 }

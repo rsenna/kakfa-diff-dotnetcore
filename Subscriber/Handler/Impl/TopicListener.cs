@@ -78,7 +78,7 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
                     }
 
                     // Generate new diff:
-                    cacheRecord.Diff = _diffGenerator.GetDiff(cacheRecord);
+                    _diffGenerator.RefreshDiff(cacheRecord);
 
                     // Save it:
                     _diffRepository.Save(cacheRecord);
