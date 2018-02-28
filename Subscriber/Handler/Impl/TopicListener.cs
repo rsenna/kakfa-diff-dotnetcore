@@ -17,8 +17,6 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
             ["enable.auto.commit"] = false
         };
 
-        private readonly IDictionary<Guid, CacheRecord> _cache;
-
         // TODO: inject consts through Autofac
         public const string Topic = "diff-topic";
         public const int ConsumeTimeoutMS = 5000;
@@ -41,8 +39,6 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
             _diffRepository = diffRepository;
             _keyDeserializer = keyDeserializer;
             _valueDeserializer = valueDeserializer;
-
-            _cache = new ConcurrentDictionary<Guid, CacheRecord>();
         }
 
         /// <summary>
@@ -51,7 +47,6 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
         public void Process(int tries)
         {
             // TODO: consumer is processing log from the beginning EVERY TIME
-            // TODO: check if Assign is enough to also process new messages
             using (var consumer = _consumerFactory.Create(ConfigAssign, _keyDeserializer, _valueDeserializer))
             {
                 consumer.Assign(new List<TopicPartitionOffset> {new TopicPartitionOffset(Topic, 0, 0)});
@@ -65,10 +60,7 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
                     }
 
                     // Check if we have read a previous message with same Key.Id
-                    if (!_cache.TryGetValue(message.Key.Id, out var cacheRecord))
-                    {
-                        cacheRecord = new CacheRecord {Id = message.Key.Id};
-                    }
+                    var cacheRecord = _diffRepository.Load(message.Key.Id) ?? new CacheRecord {Id = message.Key.Id};
 
                     // Set new retrieved side:
                     switch (message.Key.Side)
