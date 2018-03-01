@@ -32,7 +32,24 @@ algorithm (if you are looking for a good one in C#, take a look at
 Purpose was just show the benefits of having a CQRS-like system over a distributed event log (provided here by Kafka, but it could also be
 Azure Even Hub, for instance).
 
-It is also a not-bad example of the advantages of NancyFX over other .NET REST libraries. Self-hosting, simpler code,
+Quick explanation: POSTS are processed and sent to a Kafka Topic, by the Publisher module. Later, the Subscriber 
+module will load those messages, and "compose" the diff. You can send as much "left" or "right" messages you want in 
+a same ID: the diff will eventually be done using the most current versions of each side.
+
+The result diff will be stored in a [LiteDB](https://github.com/mbdavid/LiteDB) instance.
+
+Be aware that a Kafka topic works "kind of" a message queue, with two main differences:
+1) Kafka does guarantee absolute ordering, in a way that conventional MQ systems are not able to;
+2) Kafka topics are persistent and durable: it can be configured to NEVER consume any messages, without penalty (Kafka 
+was actually build with this particular usecase in mind).
+
+Both features are being used in this implementation. That means that the LiteDB instance can even be lost: if the 
+Kafka topic is intact, we will be able to reconstruct the final state of the database. 
+
+Kafka topic are also elastic: we can add other nodes if needed. That means we can scale our application horizontally 
+if needed.
+
+This is also a not-bad example of the advantages of NancyFX over other .NET REST libraries. Self-hosting, simpler code,
  ease of testing are just some of them. NancyFX Testing is also quite nice, but unfortunatelly I'm not using it here 
  (yet).
 
