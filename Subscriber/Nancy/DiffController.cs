@@ -7,6 +7,12 @@ namespace Kafka.Diff.Subscriber.Nancy
 {
     public sealed class DiffController : NancyModule
     {
+        public class DiffResponse
+        {
+            public object Body { get; set; }
+            public HttpStatusCode StatusCode { get; set; }
+        }
+
         private readonly ITopicListener _topicListener;
         private readonly IDiffRepository _diffRepository;
 
@@ -18,7 +24,11 @@ namespace Kafka.Diff.Subscriber.Nancy
             _topicListener = topicListener;
             _diffRepository = diffRepository;
 
-            Get("{id}", args => GetDiff(args.id));
+            Get("{id}", args =>
+            {
+                Guid id = args.id;
+                return Response.AsJson(GetDiff(id).Body, GetDiff(id).StatusCode);
+            });
 
             StartWorker();
         }
@@ -29,7 +39,7 @@ namespace Kafka.Diff.Subscriber.Nancy
         /// <remarks>
         /// This is a naive, never-ending implementation of a infinite loop, using tasks.
         /// </remarks>
-        private void StartWorker()
+        public void StartWorker()
         {
             Task.Run(async () =>
             {
@@ -42,19 +52,27 @@ namespace Kafka.Diff.Subscriber.Nancy
             });
         }
 
-        public Response GetDiff(Guid id)
+        public DiffResponse GetDiff(Guid id)
         {
             try
             {
                 var record = _diffRepository.Load(id);
 
-                return record == null
-                    ? Response.AsJson(new {Message = $"Unknown id {id}."}, HttpStatusCode.NotFound)
-                    : Response.AsJson(record);
+                return new DiffResponse
+                {
+                    Body = record == null
+                        ? new {Message = $"Unknown id {id}."}
+                        : (object) record,
+                    StatusCode = HttpStatusCode.NotFound
+                };
             }
             catch (Exception ex)
             {
-                return Response.AsJson(new {ex.Message, ex.Source, ex.StackTrace}, HttpStatusCode.InternalServerError);
+                return new DiffResponse
+                {
+                    Body = new {ex.Message, ex.Source, ex.StackTrace},
+                    StatusCode = HttpStatusCode.InternalServerError
+                };
             }
         }
     }

@@ -13,7 +13,12 @@ namespace Kafka.Diff.Common.Impl
 
         public void Info(string message)
         {
-            Console.WriteLine($"{_section}: {message}");
+            Console.WriteLine($"Info: {_section}: {message}");
+        }
+
+        public void Error(Exception ex)
+        {
+            Console.WriteLine($"Error: {_section}: {ex.Message}");
         }
     }
 }

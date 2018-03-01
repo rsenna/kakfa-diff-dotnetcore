@@ -9,6 +9,12 @@ namespace Kafka.Diff.Publisher.Nancy
 {
     public sealed class SubmitController : NancyModule
     {
+        public class SubmitResponse
+        {
+            public object Body { get; set; }
+            public HttpStatusCode StatusCode { get; set; }
+        }
+
         private readonly ISubmitHandler _submitHandler;
 
         public SubmitController(ISubmitHandler submitHandler)
@@ -20,20 +26,33 @@ namespace Kafka.Diff.Publisher.Nancy
             Post("{id:guid}/right", async (args, ct) => await PostIt(args.id, SubmitKey.Right));
         }
 
-        public async Task<Response> PostIt(Guid id, string side)
+        private async Task<Response> PostIt(Guid id, string side)
+        {
+            var request = this.Bind<PublisherRequest>();
+            var response = await Post(id, side, request);
+            return Response.AsJson(response.Body, response.StatusCode);
+        }
+
+        public async Task<SubmitResponse> Post(Guid id, string side, PublisherRequest request)
         {
             try
             {
                 var submitKey = new SubmitKey(id, side);
-                var debug = this.Request.Body.AsString();
-                var request = this.Bind<Request>();
                 await _submitHandler.PostAsync(submitKey, request.Data);
 
-                return Response.AsJson(new {Message = "OK"});
+                return new SubmitResponse
+                {
+                    Body = new {Message = "OK"},
+                    StatusCode = HttpStatusCode.Accepted
+                };
             }
             catch (Exception ex)
             {
-                return Response.AsJson(new {ex.Message, ex.Source, ex.StackTrace}, HttpStatusCode.InternalServerError);
+                return new SubmitResponse
+                {
+                    Body = new {ex.Message, ex.Source, ex.StackTrace},
+                    StatusCode = HttpStatusCode.InternalServerError
+                };
             }
         }
     }

@@ -7,7 +7,7 @@ using Kafka.Diff.Common;
 
 namespace Kafka.Diff.Subscriber.Handler.Impl
 {
-    public class TopicListener : ITopicListener
+    public sealed class TopicListener : ITopicListener, IDisposable
     {
         // TODO: inject bootstrap.servers
         public static readonly IDictionary<string, object> ConfigAssign = new ConcurrentDictionary<string, object>
@@ -26,19 +26,26 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
         private readonly IDiffRepository _diffRepository;
         private readonly IDeserializer<SubmitKey> _keyDeserializer;
         private readonly IDeserializer<string> _valueDeserializer;
+        private readonly ILogger<TopicListener> _logger;
+        private Consumer<SubmitKey, string> _consumer;
 
         public TopicListener(
             IKafkaConsumerFactory<SubmitKey, string> consumerFactory,
             IDiffGenerator diffGenerator,
             IDiffRepository diffRepository,
             IDeserializer<SubmitKey> keyDeserializer,
-            IDeserializer<string> valueDeserializer)
+            IDeserializer<string> valueDeserializer,
+            ILogger<TopicListener> logger)
         {
             _consumerFactory = consumerFactory;
             _diffGenerator = diffGenerator;
             _diffRepository = diffRepository;
             _keyDeserializer = keyDeserializer;
             _valueDeserializer = valueDeserializer;
+            _logger = logger;
+
+            _consumer = _consumerFactory.Create(ConfigAssign, _keyDeserializer, _valueDeserializer);
+            _consumer.Assign(new List<TopicPartitionOffset> {new TopicPartitionOffset(Topic, 0, 0)});
         }
 
         /// <summary>
@@ -46,44 +53,54 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
         /// </summary>
         public void Process(int tries)
         {
-            // TODO: consumer is processing log from the beginning EVERY TIME
-            using (var consumer = _consumerFactory.Create(ConfigAssign, _keyDeserializer, _valueDeserializer))
+            // TODO: do I also need to subscribe?
+            for (var i = 0; i < tries; i++)
             {
-                consumer.Assign(new List<TopicPartitionOffset> {new TopicPartitionOffset(Topic, 0, 0)});
-
-                // TODO: do I also need to subscribe?
-                for (var i = 0; i < tries; i++)
+                if (!_consumer.Consume(out var message, ConsumeTimeoutMS))
                 {
-                    if (!consumer.Consume(out var message, ConsumeTimeoutMS))
-                    {
-                        continue;
-                    }
-
-                    // Check if we have read a previous message with same Key.Id
-                    var cacheRecord = _diffRepository.Load(message.Key.Id) ?? new DiffRecord {Id = message.Key.Id};
-
-                    // Set new retrieved side:
-                    switch (message.Key.Side)
-                    {
-                        case SubmitKey.Left:
-                            cacheRecord.Left = message.Value;
-                            break;
-
-                        case SubmitKey.Right:
-                            cacheRecord.Right = message.Value;
-                            break;
-
-                        default:
-                            throw new InvalidOperationException($"Unknown side {message.Key.Side}.");
-                    }
-
-                    // Generate new diff:
-                    _diffGenerator.RefreshDiff(cacheRecord);
-
-                    // Save it:
-                    _diffRepository.Save(cacheRecord);
+                    continue;
                 }
+
+                _logger.Info($"Topic: {message.Topic} Partition: {message.Partition} Offset: {message.Offset} {message.Value}");
+
+                // Check if we have read a previous message with same Key.Id
+                var cacheRecord = _diffRepository.Load(message.Key.Id) ?? new DiffRecord {Id = message.Key.Id};
+
+                // Set new retrieved side:
+                switch (message.Key.Side)
+                {
+                    case SubmitKey.Left:
+                        cacheRecord.Left = message.Value;
+                        break;
+
+                    case SubmitKey.Right:
+                        cacheRecord.Right = message.Value;
+                        break;
+
+                    default:
+                        throw new InvalidOperationException($"Unknown side {message.Key.Side}.");
+                }
+
+                // Generate new diff:
+                try
+                {
+                    _diffGenerator.RefreshDiff(cacheRecord);
+                }
+                catch (FormatException e)
+                {
+                    _logger.Error(e);
+                }
+
+                // Save it:
+                _diffRepository.Save(cacheRecord);
+
+                _logger.Info($"Message {message.Key} processed.");
             }
+        }
+
+        public void Dispose()
+        {
+            _consumer?.Dispose();
         }
     }
 }

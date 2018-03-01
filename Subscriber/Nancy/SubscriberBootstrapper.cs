@@ -6,7 +6,7 @@ using Nancy.Configuration;
 
 namespace Kafka.Diff.Subscriber.Nancy
 {
-    public class Bootstrapper : AutofacNancyBootstrapper
+    public class SubscriberBootstrapper : AutofacNancyBootstrapper
     {
         protected override void ConfigureApplicationContainer(ILifetimeScope container)
         {

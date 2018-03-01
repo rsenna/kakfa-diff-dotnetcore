@@ -6,7 +6,7 @@ using Nancy.Configuration;
 
 namespace Kafka.Diff.Publisher.Nancy
 {
-    public class Bootstrapper : AutofacNancyBootstrapper
+    public class PublisherBootstrapper : AutofacNancyBootstrapper
     {
         protected override void ConfigureApplicationContainer(ILifetimeScope container)
         {
