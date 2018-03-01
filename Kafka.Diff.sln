@@ -15,6 +15,8 @@ ProjectSection(SolutionItems) = preProject
 	Scripts\CleanUp.ps1 = Scripts\CleanUp.ps1
 	Scripts\TestKafka.Docker.ps1 = Scripts\TestKafka.Docker.ps1
 	Scripts\TestKafka.Local.ps1 = Scripts\TestKafka.Local.ps1
+	LICENSE = LICENSE
+	README.md = README.md
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subscriber.Test.Unit", "Subscriber.Test.Unit\Subscriber.Test.Unit.csproj", "{E84C2CD0-A460-4BEB-A952-CC0AFE2D6FFA}"

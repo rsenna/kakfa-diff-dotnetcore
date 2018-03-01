@@ -3,7 +3,6 @@ using JetBrains.Annotations;
 
 namespace Kafka.Diff.Common
 {
-    // TODO: rename Common.Log to Common
     public class SubmitKey : IEquatable<SubmitKey>
     {
         // TODO: use enum instead
