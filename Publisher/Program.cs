@@ -6,6 +6,9 @@ using Nancy.Hosting.Self;
 
 namespace Kafka.Diff.Publisher
 {
+    /// <summary>
+    /// Initializes the Publisher application.
+    /// </summary>
     internal class Program
     {
         private static void Main(string[] args)

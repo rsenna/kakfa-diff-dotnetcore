@@ -9,6 +9,9 @@ using Kafka.Diff.Common;
 
 namespace Kafka.Diff.Publisher.Handler.Impl
 {
+    /// <summary>
+    /// Used for testing, when running Subscriber --test
+    /// </summary>
     public class TestProducerHandler : ITestProducerHandler
     {
         public static readonly IDictionary<string, object> Config = new ConcurrentDictionary<string, object>

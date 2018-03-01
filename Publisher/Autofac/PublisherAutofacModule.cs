@@ -8,6 +8,9 @@ using Kafka.Diff.Publisher.Serializer;
 
 namespace Kafka.Diff.Publisher.Autofac
 {
+    /// <summary>
+    /// IoC registration module.
+    /// </summary>
     public class PublisherAutofacModule : Module
     {
         protected override void Load(ContainerBuilder builder)

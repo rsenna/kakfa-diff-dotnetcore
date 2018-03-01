@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Kafka.Diff.Subscriber.Handler
 {
+    /// <summary>
+    /// Record stored in the LocalDB, containing the diff result.
+    /// </summary>
     public class DiffRecord
     {
         public class DiffAnalysis

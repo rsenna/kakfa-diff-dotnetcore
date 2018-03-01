@@ -4,6 +4,9 @@ using System.IO;
 
 namespace Kafka.Diff.Subscriber.Handler.Impl
 {
+    /// <summary>
+    /// Generates diffs in a <see cref="DiffRecord"/>
+    /// </summary>
     public class DiffGenerator : IDiffGenerator
     {
         public void RefreshDiff(DiffRecord diffRecord)

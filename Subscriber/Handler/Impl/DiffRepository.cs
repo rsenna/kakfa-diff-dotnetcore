@@ -4,6 +4,9 @@ using LiteDB;
 
 namespace Kafka.Diff.Subscriber.Handler.Impl
 {
+    /// <summary>
+    /// Saves and lodas <see cref="DiffRecord"/> from a LocalDB repository
+    /// </summary>
     public class DiffRepository : IDiffRepository
     {
         private readonly LiteCollection<DiffRecord> _col;

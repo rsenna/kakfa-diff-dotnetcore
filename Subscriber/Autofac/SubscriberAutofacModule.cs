@@ -8,14 +8,17 @@ using Kafka.Diff.Subscriber.Handler.Impl;
 
 namespace Kafka.Diff.Subscriber.Autofac
 {
+    /// <summary>
+    /// IoC registration module.
+    /// </summary>
     public class SubscriberAutofacModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<DiffRepository>().As<IDiffRepository>();
 
-            // TODO Only TestConsumerSubscribeHandler will be registered; use an index to choose instead.
-            builder.RegisterType<TestConsumerAssignHandler>().As<ITestConsumerHandler>().SingleInstance();
+            // Chose the instance associated to ITestConsumerHandler here
+            // builder.RegisterType<TestConsumerAssignHandler>().As<ITestConsumerHandler>().SingleInstance();
             builder.RegisterType<TestConsumerSubscribeHandler>().As<ITestConsumerHandler>().SingleInstance();
 
             builder.RegisterType<TopicListener>().As<ITopicListener>().SingleInstance();

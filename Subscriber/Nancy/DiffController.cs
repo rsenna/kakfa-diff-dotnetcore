@@ -5,6 +5,9 @@ using Nancy;
 
 namespace Kafka.Diff.Subscriber.Nancy
 {
+    /// <summary>
+    /// Main controller API class for the Subscriber module
+    /// </summary>
     public sealed class DiffController : NancyModule
     {
         public class DiffResponse

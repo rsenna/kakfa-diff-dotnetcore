@@ -6,6 +6,9 @@ using Kafka.Diff.Publisher.Handler;
 
 namespace Kafka.Diff.Publisher.Serializer
 {
+    /// <summary>
+    /// Serializes <see cref="SubmitKey"/> into a string. Used by Kafka.
+    /// </summary>
     public class SubmitKeySerializer : ISerializer<SubmitKey>
     {
         private static readonly StringSerializer InnerSerializer = new UTF8Serializer();

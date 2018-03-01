@@ -7,6 +7,9 @@ using Nancy.ModelBinding;
 
 namespace Kafka.Diff.Publisher.Nancy
 {
+    /// <summary>
+    /// Main controller API class for the Publisher module
+    /// </summary>
     public sealed class SubmitController : NancyModule
     {
         public class SubmitResponse

@@ -7,6 +7,9 @@ using Nancy.Hosting.Self;
 
 namespace Kafka.Diff.Subscriber
 {
+    /// <summary>
+    /// Initializes the Subscriber application.
+    /// </summary>
     internal class Program
     {
         private static void Main(string[] args)

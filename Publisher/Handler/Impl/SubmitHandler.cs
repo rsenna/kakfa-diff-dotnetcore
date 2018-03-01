@@ -7,6 +7,9 @@ using Kafka.Diff.Common;
 
 namespace Kafka.Diff.Publisher.Handler.Impl
 {
+    /// <summary>
+    /// Main controller for submitting diffs (left and right sides).
+    /// </summary>
     public class SubmitHandler : ISubmitHandler
     {
         public static readonly IDictionary<string, object> Config = new ConcurrentDictionary<string, object>

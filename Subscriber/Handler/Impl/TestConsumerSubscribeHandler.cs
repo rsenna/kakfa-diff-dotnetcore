@@ -6,9 +6,17 @@ using System.Threading.Tasks;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common;
+using Kafka.Diff.Subscriber.Autofac;
 
 namespace Kafka.Diff.Subscriber.Handler.Impl
 {
+    /// <summary>
+    /// Used for testing, when running Publisher --test.
+    /// </summary>
+    /// <remarks>
+    /// It implementes Kafka's "subscribe" strategy to read from topics.
+    /// See <see cref="SubscriberAutofacModule"/> to know the actual instance associated to <see cref="ITestConsumerHandler"/>.
+    /// </remarks>
     public class TestConsumerSubscribeHandler : ITestConsumerHandler
     {
         public static readonly IDictionary<string, object> Config = new ConcurrentDictionary<string, object>

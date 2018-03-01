@@ -5,6 +5,11 @@ using Kafka.Diff.Common;
 
 namespace Kafka.Diff.Subscriber.Handler.Impl
 {
+    /// <summary>
+    /// Kafka consumer factory. Observes a Kafka topic for messages. Messages are key-value items.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
     public class KafkaConsumerFactory<TKey, TValue> : IKafkaConsumerFactory<TKey, TValue>
     {
         private readonly ILogger<KafkaConsumerFactory<TKey, TValue>> _logger;

@@ -5,6 +5,9 @@ using Kafka.Diff.Common;
 
 namespace Kafka.Diff.Subscriber.Deserializer
 {
+    /// <summary>
+    /// Deserializes <see cref="SubmitKey"/> from a string. Used by Kafka.
+    /// </summary>
     public class SubmitKeyDeserializer : IDeserializer<SubmitKey>
     {
         private static readonly StringDeserializer InnerDeserializer = new UTF8Deserializer();

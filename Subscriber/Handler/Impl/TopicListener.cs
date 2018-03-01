@@ -7,6 +7,9 @@ using Kafka.Diff.Common;
 
 namespace Kafka.Diff.Subscriber.Handler.Impl
 {
+    /// <summary>
+    /// Listener used to process messages in the `diff-topic` queued.
+    /// </summary>
     public sealed class TopicListener : ITopicListener, IDisposable
     {
         // TODO: inject bootstrap.servers
