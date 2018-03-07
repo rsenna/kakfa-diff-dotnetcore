@@ -90,6 +90,8 @@ Get diff result
 
     GET http://localhost:12340/v1/diff/{Guid}
 
+### About the application
+
 The diff algorithm is arbitrary (and kind of bogus). The scope of this exercise is not to implement a proper diff
 algorithm (if you are looking for a good one in C#, take a look at
 [http://www.mathertel.de/Diff/](http://www.mathertel.de/Diff/)).
@@ -129,7 +131,6 @@ You can also run
     dotnet run -p .\Test.Integration
 
 to execute the integration test fixture - it will execute the whole application, but bypassing the NancyFX http layer.
-
 
 ### Future improvements
 
