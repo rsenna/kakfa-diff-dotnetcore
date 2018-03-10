@@ -10,7 +10,6 @@ namespace Kafka.Diff.Publisher.Test.Unit.Serializer
     public class SubmitKeySerializerFixture
     {
         private class Config : List<KeyValuePair<string, object>> {}
-
         private static readonly Config DummyConfig = A.Dummy<Config>();
 
         private readonly SubmitKeySerializer _sut;
@@ -21,7 +20,7 @@ namespace Kafka.Diff.Publisher.Test.Unit.Serializer
         }
 
         [Fact]
-        public void ShouldSerializeUsingUTF8()
+        public void ShouldUseUTF8Serializer()
         {
             SubmitKeySerializer.InnerSerializer.Should().BeOfType<UTF8Serializer>();
         }
