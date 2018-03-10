@@ -11,7 +11,7 @@ namespace Kafka.Diff.Publisher.Serializer
     /// </summary>
     public class SubmitKeySerializer : ISerializer<SubmitKey>
     {
-        private static readonly StringSerializer InnerSerializer = new UTF8Serializer();
+        public static readonly StringSerializer InnerSerializer = new UTF8Serializer();
 
         public byte[] Serialize(string topic, SubmitKey data) => InnerSerializer.Serialize(topic, data.ToString());
 
