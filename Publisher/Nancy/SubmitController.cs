@@ -12,12 +12,6 @@ namespace Kafka.Diff.Publisher.Nancy
     /// </summary>
     public sealed class SubmitController : NancyModule
     {
-        public class SubmitResponse
-        {
-            public object Body { get; set; }
-            public HttpStatusCode StatusCode { get; set; }
-        }
-
         private readonly ISubmitHandler _submitHandler;
 
         public SubmitController(ISubmitHandler submitHandler)
@@ -45,7 +39,7 @@ namespace Kafka.Diff.Publisher.Nancy
 
                 return new SubmitResponse
                 {
-                    Body = new {Message = "OK"},
+                    Body = new SubmitResponse.Success {Message = "OK"},
                     StatusCode = HttpStatusCode.Accepted
                 };
             }
@@ -53,7 +47,12 @@ namespace Kafka.Diff.Publisher.Nancy
             {
                 return new SubmitResponse
                 {
-                    Body = new {ex.Message, ex.Source, ex.StackTrace},
+                    Body = new SubmitResponse.Error
+                    {
+                        Message = ex.Message,
+                        Source = ex.Source,
+                        StackTrace = ex.StackTrace
+                    },
                     StatusCode = HttpStatusCode.InternalServerError
                 };
             }
