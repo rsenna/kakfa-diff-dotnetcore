@@ -15,7 +15,9 @@ namespace Kafka.Diff.Subscriber
     {
         private static void Main(string[] args)
         {
-            if (args.Contains("--gitlab"))
+            var gitlab = args.Contains("--gitlab");
+
+            if (gitlab)
             {
                 SubscriberAutofacModule.KafkaServer = "spotify-kafka:9092";
             }
@@ -29,8 +31,11 @@ namespace Kafka.Diff.Subscriber
             var host = new NancyHost(configuration, uri);
             host.Start(); // start hosting
 
-            Console.ReadKey();
-            host.Stop(); // stop hosting
+            if (!gitlab)
+            {
+                Console.ReadKey();
+                host.Stop(); // stop hosting
+            }
         }
     }
 }
