@@ -7,5 +7,6 @@ build:
  stage: build
  script:
   - 'dotnet build'
+  - 'dotnet vstest ((ls -Recurse *.Test.Unit.dll | % FullName) -Match "\\bin\\Debug\\")'
  only:
    - master
