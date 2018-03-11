@@ -1,12 +1,24 @@
-image : microsoft/dotnet:latest
+image: microsoft/dotnet:latest
 stages:
   - build
+  - unit-test
+  - integration-test
 before_script:
   - 'dotnet restore'
-build:
- stage: build
- script:
-  - 'dotnet build'
-  - 'find -wholename **/bin/Debug/*Test.Unit.dll | xargs dotnet vstest'
- only:
-   - master
+build_job:
+  stage: build
+  script:
+    - 'dotnet build'
+  only:
+    - master
+unit_job:
+  stage: unit-test
+  script:
+    - 'find -wholename **/bin/Debug/*Test.Unit.dll | xargs dotnet vstest'
+  only:
+    - master
+integration_job:
+  stage: integration-test
+  script:
+    - 'docker-compose up'
+    - 'find -wholename **/bin/Debug/*Test.Integration.dll | xargs dotnet vstest'
