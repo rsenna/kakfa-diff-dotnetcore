@@ -59,6 +59,7 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
                 config["bootstrap.servers"] = bootstrapServer;
             }
 
+            _logger.Info($"config[bootstrap.servers] = {config["bootstrap.servers"]}.");
             _consumer = consumerFactory.Create(config, keyDeserializer, valueDeserializer);
             _consumer.Assign(new List<TopicPartitionOffset> {new TopicPartitionOffset(Topic, 0, 0)});
         }

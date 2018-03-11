@@ -23,7 +23,9 @@ unit_job:
   - build_job
 integration_job:
   variables:
-    KAFKA_CREATE_TOPICS: "hello-topic:1:1,diff-topic:1:1:compact"
+    ADVERTISED_HOST: localhost
+    ADVERTISED_PORT: 9092
+    TOPICS: "hello-topic:1:1,diff-topic:1:1:compact"
   services:
   - spotify/kafka
   stage: integration-test

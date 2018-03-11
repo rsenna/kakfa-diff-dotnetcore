@@ -57,6 +57,8 @@ namespace Kafka.Diff.Publisher.Handler.Impl
             {
                 _config["bootstrap.servers"] = bootstrapServer;
             }
+
+            _logger.Info($"config[bootstrap.servers] = {_config["bootstrap.servers"]}.");
         }
 
         /// <summary>
