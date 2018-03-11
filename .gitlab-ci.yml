@@ -3,11 +3,6 @@ stages:
 - build
 - unit-test
 - integration-test
-before_script:
-- 'apt-get update'
-- 'apt-get install -y python3-pip'
-- 'pip3 install docker-compose'
-- 'dotnet restore'
 build_job:
   stage: build
   script:
@@ -25,9 +20,15 @@ unit_job:
   dependencies:
   - build_job
 integration_job:
+  variables:
+    KAFKA_ADVERTISED_HOST_NAME: localhost
+    KAFKA_CREATE_TOPICS: "hello-topic:1:1,diff-topic:1:1:compact"
+    KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  services:
+  - wurstmeister/zookeeper:3.4.6
+  - wurstmeister/kafka:0.11.0.1
   stage: integration-test
   script:
-  - 'docker-compose up'
   - 'find -wholename **/bin/Debug/*Test.Integration.dll | xargs dotnet vstest'
   dependencies:
   - build_job
