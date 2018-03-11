@@ -1,24 +1,30 @@
 image: microsoft/dotnet:latest
 stages:
-  - build
-  - unit-test
-  - integration-test
+- build
+- unit-test
+- integration-test
 before_script:
-  - 'dotnet restore'
+- 'dotnet restore'
 build_job:
   stage: build
   script:
-    - 'dotnet build'
+  - 'dotnet build'
   only:
-    - master
+  - master
+  artifacts:
+    untracked: true
 unit_job:
   stage: unit-test
   script:
-    - 'find -wholename **/bin/Debug/*Test.Unit.dll | xargs dotnet vstest'
+  - 'find -wholename **/bin/Debug/*Test.Unit.dll | xargs dotnet vstest'
   only:
-    - master
+  - master
+  dependencies:
+  - build_job
 integration_job:
   stage: integration-test
   script:
-    - 'docker-compose up'
-    - 'find -wholename **/bin/Debug/*Test.Integration.dll | xargs dotnet vstest'
+  - 'docker-compose up'
+  - 'find -wholename **/bin/Debug/*Test.Integration.dll | xargs dotnet vstest'
+  dependencies:
+  - build_job
