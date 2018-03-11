@@ -8,6 +8,9 @@ namespace Kafka.Diff.Publisher.Serializer
     /// </summary>
     public class UTF8Serializer : StringSerializer
     {
+        /// <summary>
+        /// Constructor. Sets UTF8 encoding.
+        /// </summary>
         public UTF8Serializer() : base(Encoding.UTF8)
         {}
     }

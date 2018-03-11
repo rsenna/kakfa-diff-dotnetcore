@@ -12,48 +12,64 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
     /// </summary>
     public sealed class TopicListener : ITopicListener, IDisposable
     {
-        // TODO: inject bootstrap.servers
-        public static readonly IDictionary<string, object> ConfigAssign = new ConcurrentDictionary<string, object>
+        public static readonly IDictionary<string, object> Config = new ConcurrentDictionary<string, object>
         {
+            ["bootstrap.servers"] = "localhost:9092", // Default kafka server.
             ["group.id"] = "kafka-diff",
-            ["bootstrap.servers"] = "localhost:9092",
             ["enable.auto.commit"] = false
         };
 
-        // TODO: inject consts through Autofac
         public const string Topic = "diff-topic";
         public const int ConsumeTimeoutMS = 5000;
 
-        private readonly IKafkaConsumerFactory<SubmitKey, string> _consumerFactory;
         private readonly IDiffGenerator _diffGenerator;
         private readonly IDiffRepository _diffRepository;
-        private readonly IDeserializer<SubmitKey> _keyDeserializer;
-        private readonly IDeserializer<string> _valueDeserializer;
         private readonly ILogger<TopicListener> _logger;
-        private Consumer<SubmitKey, string> _consumer;
+        private readonly Consumer<SubmitKey, string> _consumer;
 
+        /// <summary>
+        /// Constructor. Initializes the <see cref="_consumer"/> instance.
+        /// </summary>
+        /// <param name="consumerFactory">
+        /// A <see cref="IKafkaConsumerFactory{TKey,TValue}"/> using <see cref="SubmitKey"/> keys and <see cref="string"/> values</param>
+        /// <param name="diffGenerator">A <see cref="IDiffGenerator"/>. Used to generate diffs from left and right values.</param>
+        /// <param name="diffRepository">A <see cref="IDiffRepository"/>. Used to persist <see cref="DiffRecord"/>s.</param>
+        /// <param name="keyDeserializer">A <see cref="IDeserializer{T}"/>, used to deserialize <see cref="SubmitKey"/>s.</param>
+        /// <param name="valueDeserializer">A <see cref="IDeserializer{T}"/>, used to deserialize <see cref="string"/> values.</param>
+        /// <param name="logger">A <see cref="ILogger{T}"/> for this class.</param>
+        /// <param name="bootstrapServer">Kafka server. Overrides default 'localhost:9092' value.</param>
         public TopicListener(
             IKafkaConsumerFactory<SubmitKey, string> consumerFactory,
             IDiffGenerator diffGenerator,
             IDiffRepository diffRepository,
             IDeserializer<SubmitKey> keyDeserializer,
             IDeserializer<string> valueDeserializer,
-            ILogger<TopicListener> logger)
+            ILogger<TopicListener> logger,
+            string bootstrapServer)
         {
-            _consumerFactory = consumerFactory;
             _diffGenerator = diffGenerator;
             _diffRepository = diffRepository;
-            _keyDeserializer = keyDeserializer;
-            _valueDeserializer = valueDeserializer;
             _logger = logger;
 
-            _consumer = _consumerFactory.Create(ConfigAssign, _keyDeserializer, _valueDeserializer);
+            // TODO: not sure it must be a ConcurrentDictionary here, but keeping it just in case
+            var config = new ConcurrentDictionary<string, object>(Config);
+
+            if (!string.IsNullOrWhiteSpace(bootstrapServer))
+            {
+                config["bootstrap.servers"] = bootstrapServer;
+            }
+
+            _consumer = consumerFactory.Create(config, keyDeserializer, valueDeserializer);
             _consumer.Assign(new List<TopicPartitionOffset> {new TopicPartitionOffset(Topic, 0, 0)});
         }
 
         /// <summary>
         /// Read messages. When there is a left/right match, generate diff and save it in repository.
         /// </summary>
+        /// <param name="tries">Number of attempts</param>
+        /// <exception cref="InvalidOperationException">
+        /// If the retrieved message references an unknown side (i.e. must be either 'left' or 'right').
+        /// </exception>
         public void Process(int tries)
         {
             // TODO: do I also need to subscribe?
@@ -101,6 +117,9 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
             }
         }
 
+        /// <summary>
+        /// Disposes the <see cref="_consumer"/> instance.
+        /// </summary>
         public void Dispose()
         {
             _consumer?.Dispose();

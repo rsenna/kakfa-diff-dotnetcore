@@ -2,6 +2,9 @@
 
 namespace Kafka.Diff.Publisher.Nancy
 {
+    /// <summary>
+    /// Response returned by <see cref="SubmitController"/> actions.
+    /// </summary>
     public class SubmitResponse
     {
         public BaseBody Body { get; set; }

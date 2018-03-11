@@ -10,6 +10,9 @@ namespace Kafka.Diff.Subscriber.Nancy
     /// </summary>
     public sealed class DiffController : NancyModule
     {
+        /// <summary>
+        /// Represents a diff response from this REST service.
+        /// </summary>
         public class DiffResponse
         {
             public object Body { get; set; }
@@ -19,6 +22,11 @@ namespace Kafka.Diff.Subscriber.Nancy
         private readonly ITopicListener _topicListener;
         private readonly IDiffRepository _diffRepository;
 
+        /// <summary>
+        /// Controller. Fetches injected instances and starts kafka worker thread.
+        /// </summary>
+        /// <param name="topicListener">A <see cref="ITopicListener"/>, which will process messages from the listened topic.</param>
+        /// <param name="diffRepository">A <see cref="IDiffRepository"/>, used to store the generated <see cref="DiffRecord"/>.</param>
         public DiffController(
             ITopicListener topicListener,
             IDiffRepository diffRepository)
@@ -55,6 +63,11 @@ namespace Kafka.Diff.Subscriber.Nancy
             });
         }
 
+        /// <summary>
+        /// Returns the pre-generated diff for the specified <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The id of the left-right diff.</param>
+        /// <returns>A <see cref="DiffResponse"/> (will be serialized as JSON at run-time).</returns>
         public DiffResponse GetDiff(Guid id)
         {
             try

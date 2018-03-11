@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
+using Kafka.Diff.Publisher.Autofac;
 using Kafka.Diff.Publisher.Handler;
 using Nancy.Hosting.Self;
 
@@ -11,36 +12,22 @@ namespace Kafka.Diff.Publisher
     /// </summary>
     internal class Program
     {
+        public const string HostedUrl = "http://localhost:12345";
+
+        /// <summary>
+        /// Entry point of the <see cref="Kafka.Diff.Publisher"/> application.
+        /// Initializes the self-host Nancy environment on the specified url.
+        /// </summary>
         private static void Main(string[] args)
         {
-            if (args.Contains("--test"))
+            if (args.Contains("--gitlab"))
             {
-                Test();
+                PublisherAutofacModule.KafkaServer = "spotify-kafka:9092";
             }
-            else if (args.Contains("--service"))
-            {
-                Service();
-            }
-        }
 
-        private static void Test()
-        {
-            var builder = new ContainerBuilder();
-
-            builder.RegisterAssemblyModules(typeof(Program).Assembly);
-
-            using (var container = builder.Build())
-            {
-                var handler = container.Resolve<ITestProducerHandler>();
-                handler.Test(new [] {"this", "is", "a", "test", "b", "c", "d", "e", "f", "g" }).GetAwaiter().GetResult();
-            }
-        }
-
-        private static void Service()
-        {
             // Initialize an instance of NancyHost:
             var configuration = new HostConfiguration {UrlReservations = new UrlReservations {CreateAutomatically = true}};
-            var uri = new Uri("http://localhost:12345");
+            var uri = new Uri(HostedUrl);
 
             Console.WriteLine($"Uri: {uri}.");
 

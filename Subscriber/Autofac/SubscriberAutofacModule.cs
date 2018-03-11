@@ -13,15 +13,23 @@ namespace Kafka.Diff.Subscriber.Autofac
     /// </summary>
     public class SubscriberAutofacModule : Module
     {
+        /// <summary>
+        /// Used to override default kafka server address.
+        /// </summary>
+        public static string KafkaServer { get; set; }
+
+        /// <summary>
+        /// Adds registrations to the container.
+        /// </summary>
+        /// <param name="builder">The builder through which components can be registered.</param>
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<DiffRepository>().As<IDiffRepository>();
 
-            // Chose the instance associated to ITestConsumerHandler here
-            // builder.RegisterType<TestConsumerAssignHandler>().As<ITestConsumerHandler>().SingleInstance();
-            builder.RegisterType<TestConsumerSubscribeHandler>().As<ITestConsumerHandler>().SingleInstance();
-
-            builder.RegisterType<TopicListener>().As<ITopicListener>().SingleInstance();
+            builder.RegisterType<TopicListener>()
+                .WithParameter("bootstrapServer", KafkaServer)
+                .As<ITopicListener>()
+                .SingleInstance();
 
             // Helpers:
             builder.RegisterGeneric(typeof(KafkaConsumerFactory<,>)).As(typeof(IKafkaConsumerFactory<,>)).SingleInstance();

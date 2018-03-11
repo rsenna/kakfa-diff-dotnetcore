@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using Confluent.Kafka.Serialization;
 using Kafka.Diff.Common;
 using Kafka.Diff.Common.Autofac;
@@ -13,6 +14,15 @@ namespace Kafka.Diff.Publisher.Autofac
     /// </summary>
     public class PublisherAutofacModule : Module
     {
+        /// <summary>
+        /// Used to override default kafka server address.
+        /// </summary>
+        public static string KafkaServer { get; set; }
+
+        /// <summary>
+        /// Adds registrations to the container.
+        /// </summary>
+        /// <param name="builder">The builder through which components can be registered.</param>
         protected override void Load(ContainerBuilder builder)
         {
             // Serializers:
@@ -20,8 +30,10 @@ namespace Kafka.Diff.Publisher.Autofac
             builder.RegisterType<UTF8Serializer>().As<ISerializer<string>>().SingleInstance();
 
             // Handlers:
-            builder.RegisterType<TestProducerHandler>().As<ITestProducerHandler>().SingleInstance();
-            builder.RegisterType<SubmitHandler>().As<ISubmitHandler>().SingleInstance();
+            builder.RegisterType<SubmitHandler>()
+                .WithParameter("bootstrapServer", KafkaServer)
+                .As<ISubmitHandler>()
+                .SingleInstance();
 
             // Dependencies:
             builder.RegisterModule<CommonAutofacModule>();
