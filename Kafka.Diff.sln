@@ -19,6 +19,7 @@ ProjectSection(SolutionItems) = preProject
 	README.md = README.md
 	.gitlab-ci.yml = .gitlab-ci.yml
 	Unit-Tests.ps1 = Unit-Tests.ps1
+	Integration-Tests.ps1 = Integration-Tests.ps1
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subscriber.Test.Unit", "Subscriber.Test.Unit\Subscriber.Test.Unit.csproj", "{E84C2CD0-A460-4BEB-A952-CC0AFE2D6FFA}"
