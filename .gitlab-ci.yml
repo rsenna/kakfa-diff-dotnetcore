@@ -28,6 +28,8 @@ integration_job:
   - spotify/kafka
   stage: integration-test
   script:
-  - 'find -wholename **/bin/Debug/*Test.Integration.dll | xargs dotnet vstest'
+  - 'dotnet .\Subscriber\bin\Debug\netcoreapp2.0\Kafka.Diff.Subscriber.dll -- --gitlab'
+  - 'dotnet .\Publisher\bin\Debug\netcoreapp2.0\Kafka.Diff.Publisher.dll -- --gitlab'
+  - 'dotnet vstest .\Test.Integration\bin\Debug\netcoreapp2.0\Kafka.Diff.Test.Integration.dll'
   dependencies:
   - build_job
