@@ -23,12 +23,9 @@ unit_job:
   - build_job
 integration_job:
   variables:
-    KAFKA_ADVERTISED_HOST_NAME: localhost
     KAFKA_CREATE_TOPICS: "hello-topic:1:1,diff-topic:1:1:compact"
-    KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
   services:
-  - wurstmeister/zookeeper:3.4.6
-  - wurstmeister/kafka:0.11.0.1
+  - spotify/kafka
   stage: integration-test
   script:
   - 'find -wholename **/bin/Debug/*Test.Integration.dll | xargs dotnet vstest'
