@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiteDB;
 
@@ -30,21 +31,23 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
         /// Saves a <see cref="DiffRecord"/> into LocalDB.
         /// </summary>
         /// <param name="record">A <see cref="DiffRecord"/> instance.</param>
-        public void Save(DiffRecord record)
-        {
+        public bool Save(DiffRecord record) =>
             _col.Upsert(record);
-        }
 
         /// <summary>
         /// Loads a <see cref="DiffRecord"/> from LocalDB.
         /// </summary>
         /// <param name="id">A <see cref="Guid"/> representing the record primary key.</param>
         /// <returns>A <see cref="DiffRecord"/> if it exists, or null otherwise.</returns>
-        public DiffRecord Load(Guid id)
-        {
-            var record = _col.Find(r => r.Id == id);
+        public DiffRecord Load(Guid id) =>
+            _col.Find(r => r.Id == id)?.FirstOrDefault();
 
-            return record?.FirstOrDefault();
-        }
+        /// <summary>
+        /// Removes a record from the collection using the given <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">A <see cref="Guid"/> representing the record primary key.</param>
+        /// <returns>True if the record was deleted, false if it was not found.</returns>
+        public bool Delete(Guid id) =>
+            _col.Delete(id);
     }
 }

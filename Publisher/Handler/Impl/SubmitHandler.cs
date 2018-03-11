@@ -67,6 +67,9 @@ namespace Kafka.Diff.Publisher.Handler.Impl
         /// <returns>
         /// A <see cref="Task"/> representing a single asynchronous operation that does not return a value.
         /// </returns>
+        /// <remarks>
+        /// Right now cannot be unit-tested, since <see cref="Producer{TKey,TValue}"/> methods cannot be mocked.
+        /// </remarks>
         public async Task PostAsync(SubmitKey key, string value)
         {
             using (var producer = new Producer<SubmitKey, string>(_config, _keySerializer, _valueSerializer))

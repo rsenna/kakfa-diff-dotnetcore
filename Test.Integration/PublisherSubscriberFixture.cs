@@ -16,7 +16,7 @@ using Xunit;
 
 namespace Kafka.Diff.Test.Integration
 {
-    public class IntegrationFixture
+    public class PublisherSubscriberFixture
     {
         private static readonly Guid Guid1 = Guid.Parse("7f15150a-7e57-cafe-babe-0123456789ab");
 
@@ -40,7 +40,7 @@ namespace Kafka.Diff.Test.Integration
             return base64;
         }
 
-        public IntegrationFixture()
+        public PublisherSubscriberFixture()
         {
             var publisherContainerBuilder = new ContainerBuilder();
             publisherContainerBuilder.RegisterModule<PublisherAutofacModule>();

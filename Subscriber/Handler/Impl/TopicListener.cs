@@ -70,6 +70,9 @@ namespace Kafka.Diff.Subscriber.Handler.Impl
         /// <exception cref="InvalidOperationException">
         /// If the retrieved message references an unknown side (i.e. must be either 'left' or 'right').
         /// </exception>
+        /// <remarks>
+        /// Right now cannot be unit-tested, since <see cref="Consumer{TKey,TValue}.Consume(out Confluent.Kafka.Message{TKey,TValue},int)"/> cannot be mocked.
+        /// </remarks>
         public void Process(int tries)
         {
             // TODO: do I also need to subscribe?

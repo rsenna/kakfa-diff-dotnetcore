@@ -4,7 +4,7 @@ using Kafka.Diff.Subscriber.Handler;
 using Kafka.Diff.Subscriber.Handler.Impl;
 using Xunit;
 
-namespace Kafka.Diff.Subscriber.Test.Unit
+namespace Kafka.Diff.Subscriber.Test.Unit.Handler.Impl
 {
     public class DiffGeneratorFixture
     {
