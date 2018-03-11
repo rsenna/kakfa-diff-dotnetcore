@@ -7,6 +7,6 @@ build:
  stage: build
  script:
   - 'dotnet build'
-  - 'dotnet vstest ((ls -Recurse *.Test.Unit.dll | % FullName) -Match "\\bin\\Debug\\")'
+  - 'find -wholename **/bin/Debug/*Test.Unit.dll | xargs dotnet vstest'
  only:
    - master
