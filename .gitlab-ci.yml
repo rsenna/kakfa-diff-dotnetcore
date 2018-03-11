@@ -3,6 +3,8 @@ stages:
 - build
 - unit-test
 - integration-test
+before_script:
+- 'dotnet restore'
 build_job:
   stage: build
   script:
