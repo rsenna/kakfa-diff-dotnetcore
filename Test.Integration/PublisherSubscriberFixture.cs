@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Threading;
 using Autofac;
@@ -10,6 +11,7 @@ using Kafka.Diff.Publisher.Nancy;
 using Kafka.Diff.Subscriber.Autofac;
 using Kafka.Diff.Subscriber.Handler;
 using Kafka.Diff.Subscriber.Nancy;
+using Microsoft.Extensions.Configuration;
 using Nancy;
 using Nancy.Testing;
 using Xunit;
@@ -42,6 +44,25 @@ namespace Kafka.Diff.Test.Integration
 
         public PublisherSubscriberFixture()
         {
+            var env = Environment.GetEnvironmentVariable("KAFKA_DIFF_ENV");
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile(
+                    path: string.IsNullOrWhiteSpace(env)
+                        ? "settings.json"
+                        : $"settings.{env}.json",
+                    optional: false)
+                .AddEnvironmentVariables();
+
+            var configuration = builder.Build();
+
+            var settings = new Settings();
+            configuration.Bind(settings);
+
+            PublisherAutofacModule.KafkaServer = settings.KafkaServer;
+            SubscriberAutofacModule.KafkaServer = settings.KafkaServer;
+
             var publisherContainerBuilder = new ContainerBuilder();
             publisherContainerBuilder.RegisterModule<PublisherAutofacModule>();
             publisherContainerBuilder.RegisterType<SubmitController>().SingleInstance();

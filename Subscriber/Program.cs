@@ -15,13 +15,6 @@ namespace Kafka.Diff.Subscriber
     {
         private static void Main(string[] args)
         {
-            var gitlab = args.Contains("--gitlab");
-
-            if (gitlab)
-            {
-                SubscriberAutofacModule.KafkaServer = "spotify-kafka:9092";
-            }
-
             // Initialize an instance of NancyHost:
             var configuration = new HostConfiguration {UrlReservations = new UrlReservations {CreateAutomatically = true}};
             var uri = new Uri("http://localhost:12340");
@@ -31,11 +24,9 @@ namespace Kafka.Diff.Subscriber
             var host = new NancyHost(configuration, uri);
             host.Start(); // start hosting
 
-            if (!gitlab)
-            {
-                Console.ReadKey();
-                host.Stop(); // stop hosting
-            }
+            Console.WriteLine("Press any key to stop...");
+            Console.ReadKey();
+            host.Stop(); // stop hosting
         }
     }
 }
